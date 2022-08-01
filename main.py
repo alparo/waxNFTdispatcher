@@ -13,8 +13,16 @@ data=[
         value=eospyo.types.Name("thisismyfirs"),
     ),
     eospyo.Data(
-        name="message",
-        value=eospyo.types.String("hello from eospyo"),
+        name="to",
+        value=eospyo.types.Name("thisismyseco"),
+    ),
+    eospyo.Data(
+        name="asset_ids",
+        value=eospyo.types.Asset(["1099511797168"]),
+    ),
+    eospyo.Data(
+        name="memo",
+        value=eospyo.types.String("catch em all"),
     ),
 ]
 
@@ -22,7 +30,7 @@ auth = eospyo.Authorization(actor="thisismyfirs", permission="active")
 
 action = eospyo.Action(
     account="thisismyfirs", # this is the contract account
-    name="sendmsg", # this is the action name
+    name="transfer", # this is the action name
     data=data,
     authorization=[auth],
 )

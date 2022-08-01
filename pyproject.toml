@@ -6,7 +6,7 @@ authors = ["alparo <amparo.dios@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-eospyo = "^0.6.0"
+eospyo = {git = "https://github.com/FACINGS/eospyo.git", rev = "main"}
 
 [tool.poetry.dev-dependencies]
 

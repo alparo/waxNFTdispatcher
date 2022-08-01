@@ -59,12 +59,19 @@ version = "0.6.0"
 description = "Interact with EOSIO blockchain networks"
 category = "main"
 optional = false
-python-versions = ">=3.8,<4.0"
+python-versions = "^3.8"
+develop = false
 
 [package.dependencies]
 httpx = ">=0.22"
-pydantic = ">=1.9.0,<2.0.0"
-ueosio = ">=0.2.6,<0.3.0"
+pydantic = "^1.9.0"
+ueosio = "^0.2.6"
+
+[package.source]
+type = "git"
+url = "https://github.com/FACINGS/eospyo.git"
+reference = "main"
+resolved_reference = "6cf0da6621040113914260d5838980f4468f3990"
 
 [[package]]
 name = "h11"
@@ -212,7 +219,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "d0e7856ca5dfa8138c84e0cfb97bc1b749434be628368f81c0bda540b432c600"
+content-hash = "edd278155f76b1c17501d9c99529964ee6b3b8682500673c7992cfa4a363ed9e"
 
 [metadata.files]
 anyio = [
@@ -235,10 +242,7 @@ cryptos = [
     {file = "cryptos-1.36-py3-none-any.whl", hash = "sha256:485fa0101918f00418952946fea3aa2a1f61c42ef6508cd9eb5db6f5def8d37e"},
     {file = "cryptos-1.36.tar.gz", hash = "sha256:cd316709038210fa0bde878db59e8f82716564b7679cdc5a1c34f58efa63f2df"},
 ]
-eospyo = [
-    {file = "eospyo-0.6.0-py3-none-any.whl", hash = "sha256:73ba2c76515b2f8ab355e996d86bc9aff4c4b7e8b22a7c4b99fcb9bc4d3c780c"},
-    {file = "eospyo-0.6.0.tar.gz", hash = "sha256:50dacffdc4a156090d3d76410d1b8a899bd4b600ddc70b08cbccd5b89faf6fad"},
-]
+eospyo = []
 h11 = [
     {file = "h11-0.12.0-py3-none-any.whl", hash = "sha256:36a3cb8c0a032f56e2da7084577878a035d3b61d104230d4bd49c0c6b555a9c6"},
     {file = "h11-0.12.0.tar.gz", hash = "sha256:47222cb6067e4a307d535814917cd98fd0a57b6788ce715755fa2b6c28b56042"},
