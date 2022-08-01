@@ -7,7 +7,7 @@ KEY = os.environ["PRIVATE_KEY"]
 
 
 print("Create Transaction")
-data=[
+data = [
     eospyo.Data(
         name="from",
         value=eospyo.types.Name("thisismyfirs"),
@@ -29,8 +29,8 @@ data=[
 auth = eospyo.Authorization(actor="thisismyfirs", permission="active")
 
 action = eospyo.Action(
-    account="thisismyfirs", # this is the contract account
-    name="transfer", # this is the action name
+    account="thisismyfirs",  # this is the contract account
+    name="transfer",  # this is the action name
     data=data,
     authorization=[auth],
 )
@@ -44,7 +44,7 @@ linked_transaction = raw_transaction.link(net=net)
 
 
 print("Sign transaction")
-#key = "a_very_secret_key"
+# key = "a_very_secret_key"
 signed_transaction = linked_transaction.sign(key=KEY)
 
 
