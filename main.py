@@ -1,9 +1,10 @@
 import json
 import os
 import eospyo
-
+from loguru import logger
 
 KEY = os.environ["PRIVATE_KEY"]
+SENDER = "pixeltycoons"
 
 
 print("Create Transaction")
@@ -18,7 +19,7 @@ data = [
     ),
     eospyo.Data(
         name="asset_ids",
-        value=eospyo.types.Asset(["1099511797168"]),
+        value=eospyo.types.Array(values=(1099511797168,), type_=eospyo.types.Uint64),
     ),
     eospyo.Data(
         name="memo",
@@ -29,7 +30,7 @@ data = [
 auth = eospyo.Authorization(actor="thisismyfirs", permission="active")
 
 action = eospyo.Action(
-    account="thisismyfirs",  # this is the contract account
+    account="atomicassets",  # this is the contract account
     name="transfer",  # this is the action name
     data=data,
     authorization=[auth],
@@ -37,20 +38,18 @@ action = eospyo.Action(
 
 raw_transaction = eospyo.Transaction(actions=[action])
 
-print("Link transaction to the network")
+logger.info("Link transaction to the network")
 net = eospyo.WaxTestnet()  # this is an alias for a testnet node
 # notice that eospyo returns a new object instead of change in place
 linked_transaction = raw_transaction.link(net=net)
 
-
-print("Sign transaction")
-# key = "a_very_secret_key"
+logger.info("Sign transaction")
 signed_transaction = linked_transaction.sign(key=KEY)
 
+logger.info("Send")
+#resp = signed_transaction.send()
 
-print("Send")
-resp = signed_transaction.send()
-
-print("Printing the response")
+logger.info("Printing the response")
 resp_fmt = json.dumps(resp, indent=4)
-print(f"Response:\n{resp_fmt}")
+
+logger.info(f"Response:\n{resp_fmt}")
