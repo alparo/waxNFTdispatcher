@@ -1,0 +1,266 @@
+2022-08-02 17:32:45.521 | INFO     | __main__:send_assets_to_wallet:20 - Create Transaction
+2022-08-02 17:32:45.524 | INFO     | __main__:send_assets_to_wallet:51 - Link transaction to the network
+2022-08-02 17:32:46.541 | INFO     | __main__:send_assets_to_wallet:56 - Sign transaction
+2022-08-02 17:32:46.560 | INFO     | __main__:send_assets_to_wallet:59 - Send
+2022-08-02 17:32:47.081 | INFO     | __main__:send_assets_to_wallet:62 - Printing the response
+2022-08-02 17:32:47.081 | INFO     | __main__:send_assets_to_wallet:65 - Response:
+{
+    "code": 500,
+    "message": "Internal Service Error",
+    "error": {
+        "code": 3050003,
+        "name": "eosio_assert_message_exception",
+        "what": "eosio_assert_message assertion failure",
+        "details": [
+            {
+                "message": "assertion failure with message: Sender doesn't own at least one of the provided assets (ID: 1099511804373)",
+                "file": "wasm_interface.cpp",
+                "line_number": 1131,
+                "method": "eosio_assert"
+            },
+            {
+                "message": "pending console output: ",
+                "file": "apply_context.cpp",
+                "line_number": 113,
+                "method": "exec_one"
+            }
+        ]
+    }
+}
+2022-08-02 17:33:32.574 | INFO     | __main__:send_assets_to_wallet:20 - Create Transaction
+2022-08-02 17:33:32.575 | INFO     | __main__:send_assets_to_wallet:51 - Link transaction to the network
+2022-08-02 17:33:33.356 | INFO     | __main__:send_assets_to_wallet:56 - Sign transaction
+2022-08-02 17:33:33.365 | INFO     | __main__:send_assets_to_wallet:59 - Send
+2022-08-02 17:33:33.965 | INFO     | __main__:send_assets_to_wallet:62 - Printing the response
+2022-08-02 17:33:33.966 | INFO     | __main__:send_assets_to_wallet:65 - Response:
+{
+    "transaction_id": "386857eba0e2472ad08927cb750accd03e7f6b0a87b769d89808f68d0c8a324f",
+    "processed": {
+        "id": "386857eba0e2472ad08927cb750accd03e7f6b0a87b769d89808f68d0c8a324f",
+        "block_num": 167139972,
+        "block_time": "2022-08-02T14:33:34.500",
+        "producer_block_id": null,
+        "receipt": {
+            "status": "executed",
+            "cpu_usage_us": 1139,
+            "net_usage_words": 17
+        },
+        "elapsed": 1139,
+        "net_usage": 136,
+        "scheduled": false,
+        "action_traces": [
+            {
+                "action_ordinal": 1,
+                "creator_action_ordinal": 0,
+                "closest_unnotified_ancestor_action_ordinal": 0,
+                "receipt": {
+                    "receiver": "atomicassets",
+                    "act_digest": "b9498fcdc7b21f6bb8df70055587f591047514c501149c86f469aaaa33b4d117",
+                    "global_sequence": 312686307,
+                    "recv_sequence": 53129282,
+                    "auth_sequence": [
+                        [
+                            "thisismyfirs",
+                            45
+                        ]
+                    ],
+                    "code_sequence": 138,
+                    "abi_sequence": 138
+                },
+                "receiver": "atomicassets",
+                "act": {
+                    "account": "atomicassets",
+                    "name": "transfer",
+                    "authorization": [
+                        {
+                            "actor": "thisismyfirs",
+                            "permission": "active"
+                        }
+                    ],
+                    "data": {
+                        "from": "thisismyfirs",
+                        "to": "thisismyseco",
+                        "asset_ids": [
+                            "1099511628040"
+                        ],
+                        "memo": "send pokecrops"
+                    },
+                    "hex_data": "80af5b5e62875dcb4091c25e62875dcb0108010000000100000e73656e6420706f6b6563726f7073"
+                },
+                "context_free": false,
+                "elapsed": 571,
+                "console": "",
+                "trx_id": "386857eba0e2472ad08927cb750accd03e7f6b0a87b769d89808f68d0c8a324f",
+                "block_num": 167139972,
+                "block_time": "2022-08-02T14:33:34.500",
+                "producer_block_id": null,
+                "account_ram_deltas": [
+                    {
+                        "account": "pokemontest1",
+                        "delta": 0
+                    }
+                ],
+                "except": null,
+                "error_code": null,
+                "inline_traces": [
+                    {
+                        "action_ordinal": 2,
+                        "creator_action_ordinal": 1,
+                        "closest_unnotified_ancestor_action_ordinal": 1,
+                        "receipt": {
+                            "receiver": "thisismyfirs",
+                            "act_digest": "b9498fcdc7b21f6bb8df70055587f591047514c501149c86f469aaaa33b4d117",
+                            "global_sequence": 312686308,
+                            "recv_sequence": 22,
+                            "auth_sequence": [
+                                [
+                                    "thisismyfirs",
+                                    46
+                                ]
+                            ],
+                            "code_sequence": 138,
+                            "abi_sequence": 138
+                        },
+                        "receiver": "thisismyfirs",
+                        "act": {
+                            "account": "atomicassets",
+                            "name": "transfer",
+                            "authorization": [
+                                {
+                                    "actor": "thisismyfirs",
+                                    "permission": "active"
+                                }
+                            ],
+                            "data": {
+                                "from": "thisismyfirs",
+                                "to": "thisismyseco",
+                                "asset_ids": [
+                                    "1099511628040"
+                                ],
+                                "memo": "send pokecrops"
+                            },
+                            "hex_data": "80af5b5e62875dcb4091c25e62875dcb0108010000000100000e73656e6420706f6b6563726f7073"
+                        },
+                        "context_free": false,
+                        "elapsed": 8,
+                        "console": "",
+                        "trx_id": "386857eba0e2472ad08927cb750accd03e7f6b0a87b769d89808f68d0c8a324f",
+                        "block_num": 167139972,
+                        "block_time": "2022-08-02T14:33:34.500",
+                        "producer_block_id": null,
+                        "account_ram_deltas": [],
+                        "except": null,
+                        "error_code": null,
+                        "inline_traces": []
+                    },
+                    {
+                        "action_ordinal": 3,
+                        "creator_action_ordinal": 1,
+                        "closest_unnotified_ancestor_action_ordinal": 1,
+                        "receipt": {
+                            "receiver": "thisismyseco",
+                            "act_digest": "b9498fcdc7b21f6bb8df70055587f591047514c501149c86f469aaaa33b4d117",
+                            "global_sequence": 312686309,
+                            "recv_sequence": 8,
+                            "auth_sequence": [
+                                [
+                                    "thisismyfirs",
+                                    47
+                                ]
+                            ],
+                            "code_sequence": 138,
+                            "abi_sequence": 138
+                        },
+                        "receiver": "thisismyseco",
+                        "act": {
+                            "account": "atomicassets",
+                            "name": "transfer",
+                            "authorization": [
+                                {
+                                    "actor": "thisismyfirs",
+                                    "permission": "active"
+                                }
+                            ],
+                            "data": {
+                                "from": "thisismyfirs",
+                                "to": "thisismyseco",
+                                "asset_ids": [
+                                    "1099511628040"
+                                ],
+                                "memo": "send pokecrops"
+                            },
+                            "hex_data": "80af5b5e62875dcb4091c25e62875dcb0108010000000100000e73656e6420706f6b6563726f7073"
+                        },
+                        "context_free": false,
+                        "elapsed": 18,
+                        "console": "",
+                        "trx_id": "386857eba0e2472ad08927cb750accd03e7f6b0a87b769d89808f68d0c8a324f",
+                        "block_num": 167139972,
+                        "block_time": "2022-08-02T14:33:34.500",
+                        "producer_block_id": null,
+                        "account_ram_deltas": [],
+                        "except": null,
+                        "error_code": null,
+                        "inline_traces": []
+                    },
+                    {
+                        "action_ordinal": 4,
+                        "creator_action_ordinal": 1,
+                        "closest_unnotified_ancestor_action_ordinal": 1,
+                        "receipt": {
+                            "receiver": "atomicassets",
+                            "act_digest": "f0a5d6e5c025f771fcc8e36aa83d0ae08c9a5038e13caa807389cdfb0d0c91e2",
+                            "global_sequence": 312686310,
+                            "recv_sequence": 53129283,
+                            "auth_sequence": [
+                                [
+                                    "atomicassets",
+                                    52821689
+                                ]
+                            ],
+                            "code_sequence": 138,
+                            "abi_sequence": 138
+                        },
+                        "receiver": "atomicassets",
+                        "act": {
+                            "account": "atomicassets",
+                            "name": "logtransfer",
+                            "authorization": [
+                                {
+                                    "actor": "atomicassets",
+                                    "permission": "active"
+                                }
+                            ],
+                            "data": {
+                                "collection_name": "gen1pokemon1",
+                                "from": "thisismyfirs",
+                                "to": "thisismyseco",
+                                "asset_ids": [
+                                    "1099511628040"
+                                ],
+                                "memo": "send pokecrops"
+                            },
+                            "hex_data": "1026950ad21aa66280af5b5e62875dcb4091c25e62875dcb0108010000000100000e73656e6420706f6b6563726f7073"
+                        },
+                        "context_free": false,
+                        "elapsed": 75,
+                        "console": "",
+                        "trx_id": "386857eba0e2472ad08927cb750accd03e7f6b0a87b769d89808f68d0c8a324f",
+                        "block_num": 167139972,
+                        "block_time": "2022-08-02T14:33:34.500",
+                        "producer_block_id": null,
+                        "account_ram_deltas": [],
+                        "except": null,
+                        "error_code": null,
+                        "inline_traces": []
+                    }
+                ]
+            }
+        ],
+        "account_ram_delta": null,
+        "except": null,
+        "error_code": null
+    }
+}
+
+>>Process finished with exit code 0
