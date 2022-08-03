@@ -15,7 +15,7 @@ def send_assets_to_wallet(assets: tuple, receiver: str, memo: str = ""):
         receiver: string with receiver wallet;
         memo: optional selfexplanatory parameter.
     Out:
-        TO-DO: return status of request.
+        returns TX ID or False if TX failed.
     """
     logger.info("Create Transaction")
     data = [
@@ -60,10 +60,20 @@ def send_assets_to_wallet(assets: tuple, receiver: str, memo: str = ""):
     resp = signed_transaction.send()
 
     logger.info("Printing the response")
-    resp_fmt = json.dumps(resp, indent=4)
+    #resp_fmt = json.dumps(resp, indent=4)
+    #logger.info(f"Response:\n{resp_fmt}")
 
-    logger.info(f"Response:\n{resp_fmt}")
+    try:
+        return resp['transaction_id']
+    except KeyError:
+        logger.error(resp['error']['details'][0]['message'])
+        return False
 
 
 assets_to_send = (1099511628040,)
-send_assets_to_wallet(assets_to_send, "thisismyseco", "send pokecrops")
+tx_return_status = send_assets_to_wallet(assets_to_send, "thisismyseco", "send pokecrops")
+
+if tx_return_status:
+    logger.info(f"Successful: {tx_return_status}")
+else:
+    logger.error(f"TX failed")
