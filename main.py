@@ -1,79 +1,26 @@
-import json
-import os
-import eospyo
+from sendoutnft import find_asset_with_highest_mint, send_assets_to_wallet, SENDER, prepare_list_of_templates
 from loguru import logger
 
-KEY = os.environ["PRIVATE_KEY"]
-# SENDER = "pixeltycoons"
-SENDER = "thisismyfirs"
-logger.add("debug.log")
-
-def send_assets_to_wallet(assets: tuple, receiver: str, memo: str = ""):
-    """Sends given assets from SENDER wallet to given recepient wallet.
-    In:
-        assets: must be tuple, like (123456789, );
-        receiver: string with receiver wallet;
-        memo: optional selfexplanatory parameter.
-    Out:
-        returns TX ID or False if TX failed.
-    """
-    logger.info("Create Transaction")
-    data = [
-        eospyo.Data(
-            name="from",
-            value=eospyo.types.Name(SENDER),
-        ),
-        eospyo.Data(
-            name="to",
-            value=eospyo.types.Name(receiver),
-        ),
-        eospyo.Data(
-            name="asset_ids",
-            value=eospyo.types.Array(values=assets, type_=eospyo.types.Uint64),
-        ),
-        eospyo.Data(
-            name="memo",
-            value=eospyo.types.String(memo),
-        ),
-    ]
-
-    auth = eospyo.Authorization(actor=SENDER, permission="active")
-
-    action = eospyo.Action(
-        account="atomicassets",  # this is the contract account
-        name="transfer",  # this is the action name
-        data=data,
-        authorization=[auth],
-    )
-
-    raw_transaction = eospyo.Transaction(actions=[action])
-
-    logger.info("Link transaction to the network")
-    net = eospyo.WaxTestnet()  # this is an alias for a testnet node
-    # notice that eospyo returns a new object instead of change in place
-    linked_transaction = raw_transaction.link(net=net)
-
-    logger.info("Sign transaction")
-    signed_transaction = linked_transaction.sign(key=KEY)
-
-    logger.info("Send")
-    resp = signed_transaction.send()
-
-    logger.info("Printing the response")
-    #resp_fmt = json.dumps(resp, indent=4)
-    #logger.info(f"Response:\n{resp_fmt}")
-
-    try:
-        return resp['transaction_id']
-    except KeyError:
-        logger.error(resp['error']['details'][0]['message'])
-        return False
+INPUT = [
+    "Grass Tuft",
+    "Dried Leaf",
+    "Dried Leaf",
+    "Pinecone",
+    "Big Flat Stone",
+    "Granite Stone",
+    "Grass Tuft",
+    "Dried Leaf",
+]
 
 
-assets_to_send = (1099511628040,)
-tx_return_status = send_assets_to_wallet(assets_to_send, "thisismyseco", "send pokecrops")
+print(prepare_list_of_templates(INPUT))
 
-if tx_return_status:
-    logger.info(f"Successful: {tx_return_status}")
-else:
-    logger.error(f"TX failed")
+template_id1 = "54"
+assets_to_send = None
+#assets_to_send = find_asset_with_highest_mint(SENDER, template_id1, 2)
+if assets_to_send:
+    tx_return_status = send_assets_to_wallet(assets_to_send, "thisismyseco")
+    if tx_return_status:
+        logger.info(f"Successful: {tx_return_status}")
+    else:
+        logger.error(f"TX failed")

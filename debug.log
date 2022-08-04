@@ -261,4 +261,1614 @@
         "except": null,
         "error_code": null
     }
+}2022-08-03 11:10:06.090 | INFO     | __main__:<module>:98 - {'success': True, 'data': [], 'query_time': 1659514206067}
+2022-08-03 11:10:56.897 | INFO     | __main__:<module>:98 - {
+    "success": true,
+    "data": [],
+    "query_time": 1659514256872
 }
+2022-08-03 11:27:13.098 | INFO     | __main__:<module>:98 - {
+    "success": true,
+    "data": [
+        {
+            "account": "thisismyfirs",
+            "assets": "6"
+        }
+    ],
+    "query_time": 1659515233082
+}
+2022-08-03 11:28:29.310 | INFO     | __main__:<module>:99 - <Response [200]>
+2022-08-03 11:28:48.295 | INFO     | __main__:<module>:99 - {'success': True, 'data': [{'account': 'thisismyfirs', 'assets': '6'}], 'query_time': 1659515328270}
+2022-08-03 11:30:21.246 | INFO     | __main__:<module>:99 - {
+    "success": true,
+    "data": [
+        {
+            "account": "thisismyfirs",
+            "assets": "6"
+        }
+    ],
+    "query_time": 1659515421215
+}
+2022-08-03 11:32:01.478 | INFO     | __main__:<module>:99 - {
+    "success": true,
+    "data": [
+        {
+            "account": "pokemontest1",
+            "assets": "186318"
+        },
+        {
+            "account": "testuser1111",
+            "assets": "319"
+        },
+        {
+            "account": "mintutiltest",
+            "assets": "227"
+        },
+        {
+            "account": "javierrperez",
+            "assets": "220"
+        },
+        {
+            "account": "testuser2222",
+            "assets": "207"
+        },
+        {
+            "account": "bloodocean12",
+            "assets": "205"
+        },
+        {
+            "account": "testuser3333",
+            "assets": "205"
+        },
+        {
+            "account": "abtester1111",
+            "assets": "59"
+        },
+        {
+            "account": "alpacaworlds",
+            "assets": "59"
+        },
+        {
+            "account": "testingjosea",
+            "assets": "58"
+        },
+        {
+            "account": "111testpromo",
+            "assets": "56"
+        },
+        {
+            "account": "5tormtrooper",
+            "assets": "50"
+        },
+        {
+            "account": "zz3xxc3vvvv2",
+            "assets": "40"
+        },
+        {
+            "account": "gatogatogato",
+            "assets": "33"
+        },
+        {
+            "account": "pink.gg",
+            "assets": "25"
+        },
+        {
+            "account": "davewaxismvp",
+            "assets": "22"
+        },
+        {
+            "account": "pegarissimo2",
+            "assets": "19"
+        },
+        {
+            "account": "tvojemama124",
+            "assets": "18"
+        },
+        {
+            "account": "coffeeking13",
+            "assets": "17"
+        },
+        {
+            "account": "ahtesttestah",
+            "assets": "15"
+        },
+        {
+            "account": "happyholiday",
+            "assets": "14"
+        },
+        {
+            "account": "market.nefty",
+            "assets": "14"
+        },
+        {
+            "account": "waxtonytony1",
+            "assets": "13"
+        },
+        {
+            "account": "pegarissimo1",
+            "assets": "12"
+        },
+        {
+            "account": "naifous12345",
+            "assets": "11"
+        },
+        {
+            "account": "pramodhkvpgg",
+            "assets": "10"
+        },
+        {
+            "account": "teatnumbertw",
+            "assets": "10"
+        },
+        {
+            "account": "aleksitest12",
+            "assets": "9"
+        },
+        {
+            "account": "builtanybody",
+            "assets": "8"
+        },
+        {
+            "account": "cryptoswatch",
+            "assets": "8"
+        },
+        {
+            "account": "cxcmusictest",
+            "assets": "8"
+        },
+        {
+            "account": "listthissale",
+            "assets": "8"
+        },
+        {
+            "account": "lucastestcrc",
+            "assets": "8"
+        },
+        {
+            "account": "waxgamewax12",
+            "assets": "8"
+        },
+        {
+            "account": "appleseeddiv",
+            "assets": "7"
+        },
+        {
+            "account": "clicklikepep",
+            "assets": "7"
+        },
+        {
+            "account": "donjaviertst",
+            "assets": "7"
+        },
+        {
+            "account": "fefddfffffff",
+            "assets": "7"
+        },
+        {
+            "account": "mho4kwysboxt",
+            "assets": "7"
+        },
+        {
+            "account": "pawndigital1",
+            "assets": "7"
+        },
+        {
+            "account": "rjborba55555",
+            "assets": "7"
+        },
+        {
+            "account": "thisissocool",
+            "assets": "7"
+        },
+        {
+            "account": "cmvpeer2peer",
+            "assets": "6"
+        },
+        {
+            "account": "kateholova21",
+            "assets": "6"
+        },
+        {
+            "account": "metaversetst",
+            "assets": "6"
+        },
+        {
+            "account": "ronaldoseven",
+            "assets": "6"
+        },
+        {
+            "account": "thisismyfirs",
+            "assets": "6"
+        },
+        {
+            "account": "biohazardous",
+            "assets": "5"
+        },
+        {
+            "account": "bulbulsarado",
+            "assets": "5"
+        },
+        {
+            "account": "heroicplayer",
+            "assets": "5"
+        },
+        {
+            "account": "mrkeksztests",
+            "assets": "5"
+        },
+        {
+            "account": "qwertetstwax",
+            "assets": "5"
+        },
+        {
+            "account": "testsurvivto",
+            "assets": "5"
+        },
+        {
+            "account": "thisismyseco",
+            "assets": "5"
+        },
+        {
+            "account": "unaxxbyfatto",
+            "assets": "5"
+        },
+        {
+            "account": "vgoryacho232",
+            "assets": "5"
+        },
+        {
+            "account": "1rozatesterr",
+            "assets": "4"
+        },
+        {
+            "account": "accountdaiho",
+            "assets": "4"
+        },
+        {
+            "account": "atomicmarket",
+            "assets": "4"
+        },
+        {
+            "account": "atomictoolsx",
+            "assets": "4"
+        },
+        {
+            "account": "cdeutschmann",
+            "assets": "4"
+        },
+        {
+            "account": "cryptoshield",
+            "assets": "4"
+        },
+        {
+            "account": "iioj1cj5boxt",
+            "assets": "4"
+        },
+        {
+            "account": "infernoleadb",
+            "assets": "4"
+        },
+        {
+            "account": "lallotest123",
+            "assets": "4"
+        },
+        {
+            "account": "patrickwich1",
+            "assets": "4"
+        },
+        {
+            "account": "patrickwich2",
+            "assets": "4"
+        },
+        {
+            "account": "rawasyystest",
+            "assets": "4"
+        },
+        {
+            "account": "starlight111",
+            "assets": "4"
+        },
+        {
+            "account": "starlight222",
+            "assets": "4"
+        },
+        {
+            "account": "testsurvivor",
+            "assets": "4"
+        },
+        {
+            "account": "xlsymphonylx",
+            "assets": "4"
+        },
+        {
+            "account": "anepamepam21",
+            "assets": "3"
+        },
+        {
+            "account": "angrypie1234",
+            "assets": "3"
+        },
+        {
+            "account": "davidpinkggg",
+            "assets": "3"
+        },
+        {
+            "account": "devaccount12",
+            "assets": "3"
+        },
+        {
+            "account": "dleadertestf",
+            "assets": "3"
+        },
+        {
+            "account": "hungquach123",
+            "assets": "3"
+        },
+        {
+            "account": "johnnysinsss",
+            "assets": "3"
+        },
+        {
+            "account": "lalloplay123",
+            "assets": "3"
+        },
+        {
+            "account": "qttwaxtest11",
+            "assets": "3"
+        },
+        {
+            "account": "shadysaptest",
+            "assets": "3"
+        },
+        {
+            "account": "soiworldtest",
+            "assets": "3"
+        },
+        {
+            "account": "testluckpunk",
+            "assets": "3"
+        },
+        {
+            "account": "victoria1235",
+            "assets": "3"
+        },
+        {
+            "account": "waxisawesoe2",
+            "assets": "3"
+        },
+        {
+            "account": "woodydragon3",
+            "assets": "3"
+        },
+        {
+            "account": "appleqappleq",
+            "assets": "2"
+        },
+        {
+            "account": "artixxmike14",
+            "assets": "2"
+        },
+        {
+            "account": "atomicassets",
+            "assets": "2"
+        },
+        {
+            "account": "battleblock1",
+            "assets": "2"
+        },
+        {
+            "account": "chungduong12",
+            "assets": "2"
+        },
+        {
+            "account": "crossedetest",
+            "assets": "2"
+        },
+        {
+            "account": "dashe4gamer1",
+            "assets": "2"
+        },
+        {
+            "account": "dbirkhoelzer",
+            "assets": "2"
+        },
+        {
+            "account": "flegendsnfts",
+            "assets": "2"
+        },
+        {
+            "account": "greeneosiobp",
+            "assets": "2"
+        },
+        {
+            "account": "iou5w5dfboxt",
+            "assets": "2"
+        },
+        {
+            "account": "kswaxtest123",
+            "assets": "2"
+        },
+        {
+            "account": "magntatestie",
+            "assets": "2"
+        }
+    ],
+    "query_time": 1659515521458
+}
+2022-08-03 11:39:27.824 | INFO     | __main__:<module>:100 - {
+    "success": true,
+    "data": [
+        {
+            "contract": "atomicassets",
+            "asset_id": "1099511815310",
+            "owner": "thisismyfirs",
+            "is_transferable": true,
+            "is_burnable": true,
+            "collection": {
+                "collection_name": "gen1pokemon1",
+                "name": "Pokemon Generation 1",
+                "img": "QmRbEuW6it88S1jFsjuZgA2hEVa1itrWy8Xq2h3mMg7LKB",
+                "author": "pokemontest1",
+                "allow_notify": true,
+                "authorized_accounts": [
+                    "pokemontest1",
+                    "mintutiltest",
+                    "33testdemand",
+                    "222testpromo"
+                ],
+                "notify_accounts": [],
+                "market_fee": 0.05,
+                "created_at_block": "35798160",
+                "created_at_time": "1593631253000"
+            },
+            "schema": {
+                "schema_name": "pokemon",
+                "format": [
+                    {
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "name": "img",
+                        "type": "string"
+                    },
+                    {
+                        "name": "pokedex id",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "types",
+                        "type": "string[]"
+                    },
+                    {
+                        "name": "hp",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "attack",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "defense",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "speed",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "level",
+                        "type": "fixed8"
+                    },
+                    {
+                        "name": "gender",
+                        "type": "string"
+                    }
+                ],
+                "created_at_block": "35798160",
+                "created_at_time": "1593631253000"
+            },
+            "template": {
+                "template_id": "42",
+                "max_supply": "0",
+                "is_transferable": true,
+                "is_burnable": true,
+                "issued_supply": "1242",
+                "immutable_data": {
+                    "hp": 75,
+                    "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/42.png",
+                    "name": "Golbat",
+                    "speed": 90,
+                    "types": [
+                        "Poison",
+                        "Flying"
+                    ],
+                    "attack": 80,
+                    "defense": 70,
+                    "pokedex id": 42
+                },
+                "created_at_time": "1593631253000",
+                "created_at_block": "35798160"
+            },
+            "mutable_data": {
+                "level": 60
+            },
+            "immutable_data": {
+                "gender": "male"
+            },
+            "template_mint": "1232",
+            "backed_tokens": [],
+            "burned_by_account": null,
+            "burned_at_block": null,
+            "burned_at_time": null,
+            "updated_at_block": "167266000",
+            "updated_at_time": "1659513829500",
+            "transferred_at_block": "167266000",
+            "transferred_at_time": "1659513829500",
+            "minted_at_block": "38037307",
+            "minted_at_time": "1594753901500",
+            "data": {
+                "level": 60,
+                "gender": "male",
+                "hp": 75,
+                "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/42.png",
+                "name": "Golbat",
+                "speed": 90,
+                "types": [
+                    "Poison",
+                    "Flying"
+                ],
+                "attack": 80,
+                "defense": 70,
+                "pokedex id": 42
+            },
+            "name": "Golbat"
+        },
+        {
+            "contract": "atomicassets",
+            "asset_id": "1099511814588",
+            "owner": "thisismyfirs",
+            "is_transferable": true,
+            "is_burnable": true,
+            "collection": {
+                "collection_name": "gen1pokemon1",
+                "name": "Pokemon Generation 1",
+                "img": "QmRbEuW6it88S1jFsjuZgA2hEVa1itrWy8Xq2h3mMg7LKB",
+                "author": "pokemontest1",
+                "allow_notify": true,
+                "authorized_accounts": [
+                    "pokemontest1",
+                    "mintutiltest",
+                    "33testdemand",
+                    "222testpromo"
+                ],
+                "notify_accounts": [],
+                "market_fee": 0.05,
+                "created_at_block": "35798160",
+                "created_at_time": "1593631253000"
+            },
+            "schema": {
+                "schema_name": "pokemon",
+                "format": [
+                    {
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "name": "img",
+                        "type": "string"
+                    },
+                    {
+                        "name": "pokedex id",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "types",
+                        "type": "string[]"
+                    },
+                    {
+                        "name": "hp",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "attack",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "defense",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "speed",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "level",
+                        "type": "fixed8"
+                    },
+                    {
+                        "name": "gender",
+                        "type": "string"
+                    }
+                ],
+                "created_at_block": "35798160",
+                "created_at_time": "1593631253000"
+            },
+            "template": {
+                "template_id": "54",
+                "max_supply": "0",
+                "is_transferable": true,
+                "is_burnable": true,
+                "issued_supply": "1244",
+                "immutable_data": {
+                    "hp": 50,
+                    "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/54.png",
+                    "name": "Psyduck",
+                    "speed": 55,
+                    "types": [
+                        "Water"
+                    ],
+                    "attack": 52,
+                    "defense": 48,
+                    "pokedex id": 54
+                },
+                "created_at_time": "1593631253000",
+                "created_at_block": "35798160"
+            },
+            "mutable_data": {
+                "level": 57
+            },
+            "immutable_data": {
+                "gender": "male"
+            },
+            "template_mint": "1228",
+            "backed_tokens": [],
+            "burned_by_account": null,
+            "burned_at_block": null,
+            "burned_at_time": null,
+            "updated_at_block": "167266088",
+            "updated_at_time": "1659513873500",
+            "transferred_at_block": "167266088",
+            "transferred_at_time": "1659513873500",
+            "minted_at_block": "38037294",
+            "minted_at_time": "1594753895000",
+            "data": {
+                "level": 57,
+                "gender": "male",
+                "hp": 50,
+                "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/54.png",
+                "name": "Psyduck",
+                "speed": 55,
+                "types": [
+                    "Water"
+                ],
+                "attack": 52,
+                "defense": 48,
+                "pokedex id": 54
+            },
+            "name": "Psyduck"
+        },
+        {
+            "contract": "atomicassets",
+            "asset_id": "1099511811819",
+            "owner": "thisismyfirs",
+            "is_transferable": true,
+            "is_burnable": true,
+            "collection": {
+                "collection_name": "gen1pokemon1",
+                "name": "Pokemon Generation 1",
+                "img": "QmRbEuW6it88S1jFsjuZgA2hEVa1itrWy8Xq2h3mMg7LKB",
+                "author": "pokemontest1",
+                "allow_notify": true,
+                "authorized_accounts": [
+                    "pokemontest1",
+                    "mintutiltest",
+                    "33testdemand",
+                    "222testpromo"
+                ],
+                "notify_accounts": [],
+                "market_fee": 0.05,
+                "created_at_block": "35798160",
+                "created_at_time": "1593631253000"
+            },
+            "schema": {
+                "schema_name": "pokemon",
+                "format": [
+                    {
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "name": "img",
+                        "type": "string"
+                    },
+                    {
+                        "name": "pokedex id",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "types",
+                        "type": "string[]"
+                    },
+                    {
+                        "name": "hp",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "attack",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "defense",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "speed",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "level",
+                        "type": "fixed8"
+                    },
+                    {
+                        "name": "gender",
+                        "type": "string"
+                    }
+                ],
+                "created_at_block": "35798160",
+                "created_at_time": "1593631253000"
+            },
+            "template": {
+                "template_id": "54",
+                "max_supply": "0",
+                "is_transferable": true,
+                "is_burnable": true,
+                "issued_supply": "1244",
+                "immutable_data": {
+                    "hp": 50,
+                    "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/54.png",
+                    "name": "Psyduck",
+                    "speed": 55,
+                    "types": [
+                        "Water"
+                    ],
+                    "attack": 52,
+                    "defense": 48,
+                    "pokedex id": 54
+                },
+                "created_at_time": "1593631253000",
+                "created_at_block": "35798160"
+            },
+            "mutable_data": {
+                "level": 14
+            },
+            "immutable_data": {
+                "gender": "male"
+            },
+            "template_mint": "1210",
+            "backed_tokens": [],
+            "burned_by_account": null,
+            "burned_at_block": null,
+            "burned_at_time": null,
+            "updated_at_block": "167266077",
+            "updated_at_time": "1659513868000",
+            "transferred_at_block": "167266077",
+            "transferred_at_time": "1659513868000",
+            "minted_at_block": "38037247",
+            "minted_at_time": "1594753871500",
+            "data": {
+                "level": 14,
+                "gender": "male",
+                "hp": 50,
+                "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/54.png",
+                "name": "Psyduck",
+                "speed": 55,
+                "types": [
+                    "Water"
+                ],
+                "attack": 52,
+                "defense": 48,
+                "pokedex id": 54
+            },
+            "name": "Psyduck"
+        },
+        {
+            "contract": "atomicassets",
+            "asset_id": "1099511810946",
+            "owner": "thisismyfirs",
+            "is_transferable": true,
+            "is_burnable": true,
+            "collection": {
+                "collection_name": "gen1pokemon1",
+                "name": "Pokemon Generation 1",
+                "img": "QmRbEuW6it88S1jFsjuZgA2hEVa1itrWy8Xq2h3mMg7LKB",
+                "author": "pokemontest1",
+                "allow_notify": true,
+                "authorized_accounts": [
+                    "pokemontest1",
+                    "mintutiltest",
+                    "33testdemand",
+                    "222testpromo"
+                ],
+                "notify_accounts": [],
+                "market_fee": 0.05,
+                "created_at_block": "35798160",
+                "created_at_time": "1593631253000"
+            },
+            "schema": {
+                "schema_name": "pokemon",
+                "format": [
+                    {
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "name": "img",
+                        "type": "string"
+                    },
+                    {
+                        "name": "pokedex id",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "types",
+                        "type": "string[]"
+                    },
+                    {
+                        "name": "hp",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "attack",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "defense",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "speed",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "level",
+                        "type": "fixed8"
+                    },
+                    {
+                        "name": "gender",
+                        "type": "string"
+                    }
+                ],
+                "created_at_block": "35798160",
+                "created_at_time": "1593631253000"
+            },
+            "template": {
+                "template_id": "54",
+                "max_supply": "0",
+                "is_transferable": true,
+                "is_burnable": true,
+                "issued_supply": "1244",
+                "immutable_data": {
+                    "hp": 50,
+                    "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/54.png",
+                    "name": "Psyduck",
+                    "speed": 55,
+                    "types": [
+                        "Water"
+                    ],
+                    "attack": 52,
+                    "defense": 48,
+                    "pokedex id": 54
+                },
+                "created_at_time": "1593631253000",
+                "created_at_block": "35798160"
+            },
+            "mutable_data": {
+                "level": 78
+            },
+            "immutable_data": {
+                "gender": "female"
+            },
+            "template_mint": "1205",
+            "backed_tokens": [],
+            "burned_by_account": null,
+            "burned_at_block": null,
+            "burned_at_time": null,
+            "updated_at_block": "167266066",
+            "updated_at_time": "1659513862500",
+            "transferred_at_block": "167266066",
+            "transferred_at_time": "1659513862500",
+            "minted_at_block": "38037222",
+            "minted_at_time": "1594753859000",
+            "data": {
+                "level": 78,
+                "gender": "female",
+                "hp": 50,
+                "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/54.png",
+                "name": "Psyduck",
+                "speed": 55,
+                "types": [
+                    "Water"
+                ],
+                "attack": 52,
+                "defense": 48,
+                "pokedex id": 54
+            },
+            "name": "Psyduck"
+        },
+        {
+            "contract": "atomicassets",
+            "asset_id": "1099511801568",
+            "owner": "thisismyfirs",
+            "is_transferable": true,
+            "is_burnable": true,
+            "collection": {
+                "collection_name": "gen1pokemon1",
+                "name": "Pokemon Generation 1",
+                "img": "QmRbEuW6it88S1jFsjuZgA2hEVa1itrWy8Xq2h3mMg7LKB",
+                "author": "pokemontest1",
+                "allow_notify": true,
+                "authorized_accounts": [
+                    "pokemontest1",
+                    "mintutiltest",
+                    "33testdemand",
+                    "222testpromo"
+                ],
+                "notify_accounts": [],
+                "market_fee": 0.05,
+                "created_at_block": "35798160",
+                "created_at_time": "1593631253000"
+            },
+            "schema": {
+                "schema_name": "pokemon",
+                "format": [
+                    {
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "name": "img",
+                        "type": "string"
+                    },
+                    {
+                        "name": "pokedex id",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "types",
+                        "type": "string[]"
+                    },
+                    {
+                        "name": "hp",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "attack",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "defense",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "speed",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "level",
+                        "type": "fixed8"
+                    },
+                    {
+                        "name": "gender",
+                        "type": "string"
+                    }
+                ],
+                "created_at_block": "35798160",
+                "created_at_time": "1593631253000"
+            },
+            "template": {
+                "template_id": "42",
+                "max_supply": "0",
+                "is_transferable": true,
+                "is_burnable": true,
+                "issued_supply": "1242",
+                "immutable_data": {
+                    "hp": 75,
+                    "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/42.png",
+                    "name": "Golbat",
+                    "speed": 90,
+                    "types": [
+                        "Poison",
+                        "Flying"
+                    ],
+                    "attack": 80,
+                    "defense": 70,
+                    "pokedex id": 42
+                },
+                "created_at_time": "1593631253000",
+                "created_at_block": "35798160"
+            },
+            "mutable_data": {
+                "level": 9
+            },
+            "immutable_data": {
+                "gender": "female"
+            },
+            "template_mint": "1142",
+            "backed_tokens": [],
+            "burned_by_account": null,
+            "burned_at_block": null,
+            "burned_at_time": null,
+            "updated_at_block": "167266016",
+            "updated_at_time": "1659513837500",
+            "transferred_at_block": "167266016",
+            "transferred_at_time": "1659513837500",
+            "minted_at_block": "38037027",
+            "minted_at_time": "1594753761500",
+            "data": {
+                "level": 9,
+                "gender": "female",
+                "hp": 75,
+                "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/42.png",
+                "name": "Golbat",
+                "speed": 90,
+                "types": [
+                    "Poison",
+                    "Flying"
+                ],
+                "attack": 80,
+                "defense": 70,
+                "pokedex id": 42
+            },
+            "name": "Golbat"
+        },
+        {
+            "contract": "atomicassets",
+            "asset_id": "1099511628093",
+            "owner": "thisismyfirs",
+            "is_transferable": true,
+            "is_burnable": true,
+            "collection": {
+                "collection_name": "gen1pokemon1",
+                "name": "Pokemon Generation 1",
+                "img": "QmRbEuW6it88S1jFsjuZgA2hEVa1itrWy8Xq2h3mMg7LKB",
+                "author": "pokemontest1",
+                "allow_notify": true,
+                "authorized_accounts": [
+                    "pokemontest1",
+                    "mintutiltest",
+                    "33testdemand",
+                    "222testpromo"
+                ],
+                "notify_accounts": [],
+                "market_fee": 0.05,
+                "created_at_block": "35798160",
+                "created_at_time": "1593631253000"
+            },
+            "schema": {
+                "schema_name": "pokemon",
+                "format": [
+                    {
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "name": "img",
+                        "type": "string"
+                    },
+                    {
+                        "name": "pokedex id",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "types",
+                        "type": "string[]"
+                    },
+                    {
+                        "name": "hp",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "attack",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "defense",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "speed",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "level",
+                        "type": "fixed8"
+                    },
+                    {
+                        "name": "gender",
+                        "type": "string"
+                    }
+                ],
+                "created_at_block": "35798160",
+                "created_at_time": "1593631253000"
+            },
+            "template": {
+                "template_id": "64",
+                "max_supply": "0",
+                "is_transferable": true,
+                "is_burnable": true,
+                "issued_supply": "1283",
+                "immutable_data": {
+                    "hp": 40,
+                    "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/64.png",
+                    "name": "Kadabra",
+                    "speed": 105,
+                    "types": [
+                        "Psychic"
+                    ],
+                    "attack": 35,
+                    "defense": 30,
+                    "pokedex id": 64
+                },
+                "created_at_time": "1593631253000",
+                "created_at_block": "35798160"
+            },
+            "mutable_data": {
+                "level": 17
+            },
+            "immutable_data": {
+                "gender": "female"
+            },
+            "template_mint": "2",
+            "backed_tokens": [],
+            "burned_by_account": null,
+            "burned_at_block": null,
+            "burned_at_time": null,
+            "updated_at_block": "166495092",
+            "updated_at_time": "1659128359500",
+            "transferred_at_block": "166495092",
+            "transferred_at_time": "1659128359500",
+            "minted_at_block": "35798235",
+            "minted_at_time": "1593631290500",
+            "data": {
+                "level": 17,
+                "gender": "female",
+                "hp": 40,
+                "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/64.png",
+                "name": "Kadabra",
+                "speed": 105,
+                "types": [
+                    "Psychic"
+                ],
+                "attack": 35,
+                "defense": 30,
+                "pokedex id": 64
+            },
+            "name": "Kadabra"
+        }
+    ],
+    "query_time": 1659515967805
+}
+2022-08-03 11:59:42.229 | INFO     | __main__:<module>:100 - {
+    "success": true,
+    "data": [
+        {
+            "contract": "atomicassets",
+            "asset_id": "1099511814588",
+            "owner": "thisismyfirs",
+            "is_transferable": true,
+            "is_burnable": true,
+            "collection": {
+                "collection_name": "gen1pokemon1",
+                "name": "Pokemon Generation 1",
+                "img": "QmRbEuW6it88S1jFsjuZgA2hEVa1itrWy8Xq2h3mMg7LKB",
+                "author": "pokemontest1",
+                "allow_notify": true,
+                "authorized_accounts": [
+                    "pokemontest1",
+                    "mintutiltest",
+                    "33testdemand",
+                    "222testpromo"
+                ],
+                "notify_accounts": [],
+                "market_fee": 0.05,
+                "created_at_block": "35798160",
+                "created_at_time": "1593631253000"
+            },
+            "schema": {
+                "schema_name": "pokemon",
+                "format": [
+                    {
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "name": "img",
+                        "type": "string"
+                    },
+                    {
+                        "name": "pokedex id",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "types",
+                        "type": "string[]"
+                    },
+                    {
+                        "name": "hp",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "attack",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "defense",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "speed",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "level",
+                        "type": "fixed8"
+                    },
+                    {
+                        "name": "gender",
+                        "type": "string"
+                    }
+                ],
+                "created_at_block": "35798160",
+                "created_at_time": "1593631253000"
+            },
+            "template": {
+                "template_id": "54",
+                "max_supply": "0",
+                "is_transferable": true,
+                "is_burnable": true,
+                "issued_supply": "1244",
+                "immutable_data": {
+                    "hp": 50,
+                    "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/54.png",
+                    "name": "Psyduck",
+                    "speed": 55,
+                    "types": [
+                        "Water"
+                    ],
+                    "attack": 52,
+                    "defense": 48,
+                    "pokedex id": 54
+                },
+                "created_at_time": "1593631253000",
+                "created_at_block": "35798160"
+            },
+            "mutable_data": {
+                "level": 57
+            },
+            "immutable_data": {
+                "gender": "male"
+            },
+            "template_mint": "1228",
+            "backed_tokens": [],
+            "burned_by_account": null,
+            "burned_at_block": null,
+            "burned_at_time": null,
+            "updated_at_block": "167266088",
+            "updated_at_time": "1659513873500",
+            "transferred_at_block": "167266088",
+            "transferred_at_time": "1659513873500",
+            "minted_at_block": "38037294",
+            "minted_at_time": "1594753895000",
+            "data": {
+                "level": 57,
+                "gender": "male",
+                "hp": 50,
+                "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/54.png",
+                "name": "Psyduck",
+                "speed": 55,
+                "types": [
+                    "Water"
+                ],
+                "attack": 52,
+                "defense": 48,
+                "pokedex id": 54
+            },
+            "name": "Psyduck"
+        },
+        {
+            "contract": "atomicassets",
+            "asset_id": "1099511811819",
+            "owner": "thisismyfirs",
+            "is_transferable": true,
+            "is_burnable": true,
+            "collection": {
+                "collection_name": "gen1pokemon1",
+                "name": "Pokemon Generation 1",
+                "img": "QmRbEuW6it88S1jFsjuZgA2hEVa1itrWy8Xq2h3mMg7LKB",
+                "author": "pokemontest1",
+                "allow_notify": true,
+                "authorized_accounts": [
+                    "pokemontest1",
+                    "mintutiltest",
+                    "33testdemand",
+                    "222testpromo"
+                ],
+                "notify_accounts": [],
+                "market_fee": 0.05,
+                "created_at_block": "35798160",
+                "created_at_time": "1593631253000"
+            },
+            "schema": {
+                "schema_name": "pokemon",
+                "format": [
+                    {
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "name": "img",
+                        "type": "string"
+                    },
+                    {
+                        "name": "pokedex id",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "types",
+                        "type": "string[]"
+                    },
+                    {
+                        "name": "hp",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "attack",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "defense",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "speed",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "level",
+                        "type": "fixed8"
+                    },
+                    {
+                        "name": "gender",
+                        "type": "string"
+                    }
+                ],
+                "created_at_block": "35798160",
+                "created_at_time": "1593631253000"
+            },
+            "template": {
+                "template_id": "54",
+                "max_supply": "0",
+                "is_transferable": true,
+                "is_burnable": true,
+                "issued_supply": "1244",
+                "immutable_data": {
+                    "hp": 50,
+                    "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/54.png",
+                    "name": "Psyduck",
+                    "speed": 55,
+                    "types": [
+                        "Water"
+                    ],
+                    "attack": 52,
+                    "defense": 48,
+                    "pokedex id": 54
+                },
+                "created_at_time": "1593631253000",
+                "created_at_block": "35798160"
+            },
+            "mutable_data": {
+                "level": 14
+            },
+            "immutable_data": {
+                "gender": "male"
+            },
+            "template_mint": "1210",
+            "backed_tokens": [],
+            "burned_by_account": null,
+            "burned_at_block": null,
+            "burned_at_time": null,
+            "updated_at_block": "167266077",
+            "updated_at_time": "1659513868000",
+            "transferred_at_block": "167266077",
+            "transferred_at_time": "1659513868000",
+            "minted_at_block": "38037247",
+            "minted_at_time": "1594753871500",
+            "data": {
+                "level": 14,
+                "gender": "male",
+                "hp": 50,
+                "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/54.png",
+                "name": "Psyduck",
+                "speed": 55,
+                "types": [
+                    "Water"
+                ],
+                "attack": 52,
+                "defense": 48,
+                "pokedex id": 54
+            },
+            "name": "Psyduck"
+        },
+        {
+            "contract": "atomicassets",
+            "asset_id": "1099511810946",
+            "owner": "thisismyfirs",
+            "is_transferable": true,
+            "is_burnable": true,
+            "collection": {
+                "collection_name": "gen1pokemon1",
+                "name": "Pokemon Generation 1",
+                "img": "QmRbEuW6it88S1jFsjuZgA2hEVa1itrWy8Xq2h3mMg7LKB",
+                "author": "pokemontest1",
+                "allow_notify": true,
+                "authorized_accounts": [
+                    "pokemontest1",
+                    "mintutiltest",
+                    "33testdemand",
+                    "222testpromo"
+                ],
+                "notify_accounts": [],
+                "market_fee": 0.05,
+                "created_at_block": "35798160",
+                "created_at_time": "1593631253000"
+            },
+            "schema": {
+                "schema_name": "pokemon",
+                "format": [
+                    {
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "name": "img",
+                        "type": "string"
+                    },
+                    {
+                        "name": "pokedex id",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "types",
+                        "type": "string[]"
+                    },
+                    {
+                        "name": "hp",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "attack",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "defense",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "speed",
+                        "type": "uint16"
+                    },
+                    {
+                        "name": "level",
+                        "type": "fixed8"
+                    },
+                    {
+                        "name": "gender",
+                        "type": "string"
+                    }
+                ],
+                "created_at_block": "35798160",
+                "created_at_time": "1593631253000"
+            },
+            "template": {
+                "template_id": "54",
+                "max_supply": "0",
+                "is_transferable": true,
+                "is_burnable": true,
+                "issued_supply": "1244",
+                "immutable_data": {
+                    "hp": 50,
+                    "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/54.png",
+                    "name": "Psyduck",
+                    "speed": 55,
+                    "types": [
+                        "Water"
+                    ],
+                    "attack": 52,
+                    "defense": 48,
+                    "pokedex id": 54
+                },
+                "created_at_time": "1593631253000",
+                "created_at_block": "35798160"
+            },
+            "mutable_data": {
+                "level": 78
+            },
+            "immutable_data": {
+                "gender": "female"
+            },
+            "template_mint": "1205",
+            "backed_tokens": [],
+            "burned_by_account": null,
+            "burned_at_block": null,
+            "burned_at_time": null,
+            "updated_at_block": "167266066",
+            "updated_at_time": "1659513862500",
+            "transferred_at_block": "167266066",
+            "transferred_at_time": "1659513862500",
+            "minted_at_block": "38037222",
+            "minted_at_time": "1594753859000",
+            "data": {
+                "level": 78,
+                "gender": "female",
+                "hp": 50,
+                "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/54.png",
+                "name": "Psyduck",
+                "speed": 55,
+                "types": [
+                    "Water"
+                ],
+                "attack": 52,
+                "defense": 48,
+                "pokedex id": 54
+            },
+            "name": "Psyduck"
+        }
+    ],
+    "query_time": 1659517182207
+}
+2022-08-03 12:33:38.237 | ERROR    | __main__:find_asset_with_highest_mint:101 - Not enough assest available. 
+2022-08-03 12:35:33.512 | ERROR    | __main__:find_asset_with_highest_mint:102 - Not enough assets available.
+You have: 3,
+you need: 10
+2022-08-03 17:40:46.976 | ERROR    | __main__:find_asset_with_highest_mint:98 - Not enough assets available.
+you have: 3
+you need: 10
+2022-08-03 17:50:32.585 | ERROR    | __main__:find_asset_with_highest_mint:98 - Not enough assets available.
+you have: 3
+you need: 10
+2022-08-04 19:42:23.903 | ERROR    | __main__:find_asset_with_highest_mint:103 - Not enough assets available.
+you have: 3
+you need: 4
+2022-08-04 19:46:23.865 | ERROR    | __main__:find_asset_with_highest_mint:103 - Not enough assets available.
+you have: 3
+you need: 4
+2022-08-04 19:55:36.754 | ERROR    | __main__:find_asset_with_highest_mint:104 - Not enough assets available.
+you have: 3
+you need: 4
+2022-08-04 19:56:22.375 | ERROR    | __main__:find_asset_with_highest_mint:104 - Not enough assets available.
+you have: 3
+you need: 4Server reply: {'success': True, 'data': [{'contract': 'atomicassets', 'asset_id': '1099511814588', 'owner': 'thisismyfirs', 'is_transferable': True, 'is_burnable': True, 'collection': {'collection_name': 'gen1pokemon1', 'name': 'Pokemon Generation 1', 'img': 'QmRbEuW6it88S1jFsjuZgA2hEVa1itrWy8Xq2h3mMg7LKB', 'author': 'pokemontest1', 'allow_notify': True, 'authorized_accounts': ['pokemontest1', 'mintutiltest', '33testdemand', '222testpromo'], 'notify_accounts': [], 'market_fee': 0.05, 'created_at_block': '35798160', 'created_at_time': '1593631253000'}, 'schema': {'schema_name': 'pokemon', 'format': [{'name': 'name', 'type': 'string'}, {'name': 'img', 'type': 'string'}, {'name': 'pokedex id', 'type': 'uint16'}, {'name': 'types', 'type': 'string[]'}, {'name': 'hp', 'type': 'uint16'}, {'name': 'attack', 'type': 'uint16'}, {'name': 'defense', 'type': 'uint16'}, {'name': 'speed', 'type': 'uint16'}, {'name': 'level', 'type': 'fixed8'}, {'name': 'gender', 'type': 'string'}], 'created_at_block': '35798160', 'created_at_time': '1593631253000'}, 'template': {'template_id': '54', 'max_supply': '0', 'is_transferable': True, 'is_burnable': True, 'issued_supply': '1244', 'immutable_data': {'hp': 50, 'img': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/54.png', 'name': 'Psyduck', 'speed': 55, 'types': ['Water'], 'attack': 52, 'defense': 48, 'pokedex id': 54}, 'created_at_time': '1593631253000', 'created_at_block': '35798160'}, 'mutable_data': {'level': 57}, 'immutable_data': {'gender': 'male'}, 'template_mint': '1228', 'backed_tokens': [], 'burned_by_account': None, 'burned_at_block': None, 'burned_at_time': None, 'updated_at_block': '167266088', 'updated_at_time': '1659513873500', 'transferred_at_block': '167266088', 'transferred_at_time': '1659513873500', 'minted_at_block': '38037294', 'minted_at_time': '1594753895000', 'data': {'level': 57, 'gender': 'male', 'hp': 50, 'img': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/54.png', 'name': 'Psyduck', 'speed': 55, 'types': ['Water'], 'attack': 52, 'defense': 48, 'pokedex id': 54}, 'name': 'Psyduck'}, {'contract': 'atomicassets', 'asset_id': '1099511811819', 'owner': 'thisismyfirs', 'is_transferable': True, 'is_burnable': True, 'collection': {'collection_name': 'gen1pokemon1', 'name': 'Pokemon Generation 1', 'img': 'QmRbEuW6it88S1jFsjuZgA2hEVa1itrWy8Xq2h3mMg7LKB', 'author': 'pokemontest1', 'allow_notify': True, 'authorized_accounts': ['pokemontest1', 'mintutiltest', '33testdemand', '222testpromo'], 'notify_accounts': [], 'market_fee': 0.05, 'created_at_block': '35798160', 'created_at_time': '1593631253000'}, 'schema': {'schema_name': 'pokemon', 'format': [{'name': 'name', 'type': 'string'}, {'name': 'img', 'type': 'string'}, {'name': 'pokedex id', 'type': 'uint16'}, {'name': 'types', 'type': 'string[]'}, {'name': 'hp', 'type': 'uint16'}, {'name': 'attack', 'type': 'uint16'}, {'name': 'defense', 'type': 'uint16'}, {'name': 'speed', 'type': 'uint16'}, {'name': 'level', 'type': 'fixed8'}, {'name': 'gender', 'type': 'string'}], 'created_at_block': '35798160', 'created_at_time': '1593631253000'}, 'template': {'template_id': '54', 'max_supply': '0', 'is_transferable': True, 'is_burnable': True, 'issued_supply': '1244', 'immutable_data': {'hp': 50, 'img': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/54.png', 'name': 'Psyduck', 'speed': 55, 'types': ['Water'], 'attack': 52, 'defense': 48, 'pokedex id': 54}, 'created_at_time': '1593631253000', 'created_at_block': '35798160'}, 'mutable_data': {'level': 14}, 'immutable_data': {'gender': 'male'}, 'template_mint': '1210', 'backed_tokens': [], 'burned_by_account': None, 'burned_at_block': None, 'burned_at_time': None, 'updated_at_block': '167266077', 'updated_at_time': '1659513868000', 'transferred_at_block': '167266077', 'transferred_at_time': '1659513868000', 'minted_at_block': '38037247', 'minted_at_time': '1594753871500', 'data': {'level': 14, 'gender': 'male', 'hp': 50, 'img': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/54.png', 'name': 'Psyduck', 'speed': 55, 'types': ['Water'], 'attack': 52, 'defense': 48, 'pokedex id': 54}, 'name': 'Psyduck'}, {'contract': 'atomicassets', 'asset_id': '1099511810946', 'owner': 'thisismyfirs', 'is_transferable': True, 'is_burnable': True, 'collection': {'collection_name': 'gen1pokemon1', 'name': 'Pokemon Generation 1', 'img': 'QmRbEuW6it88S1jFsjuZgA2hEVa1itrWy8Xq2h3mMg7LKB', 'author': 'pokemontest1', 'allow_notify': True, 'authorized_accounts': ['pokemontest1', 'mintutiltest', '33testdemand', '222testpromo'], 'notify_accounts': [], 'market_fee': 0.05, 'created_at_block': '35798160', 'created_at_time': '1593631253000'}, 'schema': {'schema_name': 'pokemon', 'format': [{'name': 'name', 'type': 'string'}, {'name': 'img', 'type': 'string'}, {'name': 'pokedex id', 'type': 'uint16'}, {'name': 'types', 'type': 'string[]'}, {'name': 'hp', 'type': 'uint16'}, {'name': 'attack', 'type': 'uint16'}, {'name': 'defense', 'type': 'uint16'}, {'name': 'speed', 'type': 'uint16'}, {'name': 'level', 'type': 'fixed8'}, {'name': 'gender', 'type': 'string'}], 'created_at_block': '35798160', 'created_at_time': '1593631253000'}, 'template': {'template_id': '54', 'max_supply': '0', 'is_transferable': True, 'is_burnable': True, 'issued_supply': '1244', 'immutable_data': {'hp': 50, 'img': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/54.png', 'name': 'Psyduck', 'speed': 55, 'types': ['Water'], 'attack': 52, 'defense': 48, 'pokedex id': 54}, 'created_at_time': '1593631253000', 'created_at_block': '35798160'}, 'mutable_data': {'level': 78}, 'immutable_data': {'gender': 'female'}, 'template_mint': '1205', 'backed_tokens': [], 'burned_by_account': None, 'burned_at_block': None, 'burned_at_time': None, 'updated_at_block': '167266066', 'updated_at_time': '1659513862500', 'transferred_at_block': '167266066', 'transferred_at_time': '1659513862500', 'minted_at_block': '38037222', 'minted_at_time': '1594753859000', 'data': {'level': 78, 'gender': 'female', 'hp': 50, 'img': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/54.png', 'name': 'Psyduck', 'speed': 55, 'types': ['Water'], 'attack': 52, 'defense': 48, 'pokedex id': 54}, 'name': 'Psyduck'}], 'query_time': 1659632182369}
+2022-08-04 20:01:57.537 | ERROR    | __main__:find_asset_with_highest_mint:101 - Not enough assets available.
+you have: 3
+you need: 4
+2022-08-04 20:14:18.315 | INFO     | __main__:send_assets_to_wallet:27 - Create Transaction
+2022-08-04 20:14:18.329 | INFO     | __main__:send_assets_to_wallet:58 - Link transaction to the network
+2022-08-04 20:14:18.741 | INFO     | __main__:send_assets_to_wallet:63 - Sign transaction
+2022-08-04 20:14:18.747 | INFO     | __main__:send_assets_to_wallet:66 - Send
+2022-08-04 20:14:19.010 | INFO     | __main__:<module>:110 - Successful: bb381084cac8bc922e91c65d814e2d1213b3216cf6e7a72ea70375b9e443c481
+2022-08-04 20:15:20.444 | INFO     | __main__:send_assets_to_wallet:27 - Create Transaction
+2022-08-04 20:15:20.445 | INFO     | __main__:send_assets_to_wallet:58 - Link transaction to the network
+2022-08-04 20:15:20.690 | INFO     | __main__:send_assets_to_wallet:63 - Sign transaction
+2022-08-04 20:15:20.694 | INFO     | __main__:send_assets_to_wallet:66 - Send
+2022-08-04 20:15:21.005 | INFO     | __main__:<module>:110 - Successful: 2a3154813c63e9e536399bdc4eed691a667feae5ed3e31c3b572b80c7c0aa8f8
+2022-08-04 20:16:20.392 | ERROR    | __main__:find_asset_with_highest_mint:93 - Not enough assets available.
+you have: 0
+you need: 2
+2022-08-04 20:16:20.393 | INFO     | __main__:send_assets_to_wallet:27 - Create Transaction
+2022-08-04 20:17:00.545 | ERROR    | __main__:find_asset_with_highest_mint:93 - Not enough assets available.
+you have: 0
+you need: 2
+2022-08-04 20:20:46.808 | ERROR    | __main__:find_asset_with_highest_mint:93 - Not enough assets available.
+you have: 0
+you need: 2
