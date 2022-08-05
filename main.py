@@ -1,5 +1,4 @@
-from sendoutnft import  prepare_list_of_templates, \
-    send_assets_to_wallet, COLLECTION_WALLET
+from sendoutnft import send_assets_to_wallet, mint_asset
 
 INPUT = [
     "Grass Tuft",
@@ -14,4 +13,5 @@ INPUT = [
 
 recipient = "thisismyseco"
 
-send_assets_to_wallet(INPUT, recipient)
+#send_assets_to_wallet(INPUT, recipient)
+mint_asset("thisismyfirs", "cxctestnet12", "123", "338280", "thisismyfirs")

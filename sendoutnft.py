@@ -27,7 +27,7 @@ DICT = {
 
 def send_blockchain_transaction(assets: list, recipient: str, memo: str = ""):
     """
-    Sends given assets from SENDER wallet to given recipient wallet.
+    Sends given assets from SENDER wallet to given recipient wallet
     :param assets: must be list, like [123456789, ]
     :param recipient: string with receiver wallet
     :param memo: optional self-explanatory parameter
@@ -82,12 +82,12 @@ def get_available_assets(
     sorting_key: str = "asset_id",
 ):
     """
-    Make request to blockchain to get available assets with given template IDs.
+    Make request to blockchain to get available assets with given template IDs
     :param collection_wallet: collection wallet which owns the assets
     :param collection: self-explanatory
     :param template_list: list with templates to search
     :param sorting_key: self-explanatory, default "asset_id"
-    :return: API response with all found assets sorted by default by highest asset ID.
+    :return: API response with all found assets sorted by default by highest asset ID
     """
     # convert list to comma separated string
     template_list_string = ",".join(str(template) for template in template_list)
@@ -105,7 +105,7 @@ def find_assets_with_highest_mints(
     api_response, template_id: str, quantity_requested: int = 1
 ):
     """
-    Finds in collection_wallet given quantity of assets with given template.
+    Finds in collection_wallet given quantity of assets with given template
     :param api_response: data received from blockchain
     :param template_id: only one template ID per function run
     :param quantity_requested: how many assets with given template ID must be found
@@ -201,3 +201,60 @@ def send_assets_to_wallet(
         else:
             logger.error(f"TX failed")
         return tx_return_status
+
+
+def mint_asset(authorized_minter, collection_name, schema_name, template_id, new_asset_owner):
+    """
+
+    :param authorized_minter:
+    :param collection_name:
+    :param schema_name:
+    :param template_id:
+    :param new_asset_owner:
+    :return: TX ID or 'False' if TX failed.
+    """
+    logger.info("Creating Transaction...")
+    data = [
+        eospyo.Data(
+            name="authorized_minter",
+            value=eospyo.types.Name(authorized_minter),
+        ),
+        eospyo.Data(
+            name="collection_name",
+            value=eospyo.types.Name(collection_name),
+        ),
+        eospyo.Data(
+            name="schema_name",
+            value=eospyo.types.Name(schema_name),
+        ),
+        eospyo.Data(
+            name="template_id",
+            value=eospyo.types.Uint32(template_id),
+        ),
+        eospyo.Data(
+            name="new_asset_owner",
+            value=eospyo.types.Name(new_asset_owner),
+        ),
+    ]
+    auth = eospyo.Authorization(actor=COLLECTION_WALLET, permission="active")
+    action = eospyo.Action(
+        account="atomicassets",  # this is the contract account
+        name="mintasset",  # this is the action name
+        data=data,
+        authorization=[auth],
+    )
+    raw_transaction = eospyo.Transaction(actions=[action])
+    logger.info("Linking transaction to the network...")
+    net = eospyo.WaxTestnet()  # this is an alias for a testnet node
+    # notice that eospyo returns a new object instead of change in place
+    linked_transaction = raw_transaction.link(net=net)
+    logger.info("Signing transaction...")
+    signed_transaction = linked_transaction.sign(key=KEY)
+    logger.info("Sending transaction to the blockchain...")
+    resp = signed_transaction.send()
+    try:
+        return resp["transaction_id"]
+    except KeyError:
+        logger.error(resp["error"]["details"][0]["message"])
+        return False
+    pass
