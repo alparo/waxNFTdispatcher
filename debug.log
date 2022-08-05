@@ -1872,3 +1872,91 @@ you need: 2
 2022-08-04 20:20:46.808 | ERROR    | __main__:find_asset_with_highest_mint:93 - Not enough assets available.
 you have: 0
 you need: 2
+2022-08-05 12:33:38.691 | ERROR    | sendoutnft:prepare_list_of_templates:138 - Asset name is not in the dictionary
+2022-08-05 12:36:09.731 | ERROR    | sendoutnft:prepare_list_of_templates:140 - Asset name is not in the dictionary
+2022-08-05 12:39:28.330 | ERROR    | sendoutnft:prepare_list_of_templates:140 - Asset name is not in the dictionary
+2022-08-05 12:39:28.331 | ERROR    | sendoutnft:prepare_list_of_templates:145 - Asset name is not in the dictionary
+2022-08-05 12:39:51.700 | ERROR    | sendoutnft:prepare_list_of_templates:140 - Asset name is not in the dictionary
+2022-08-05 12:39:51.701 | ERROR    | sendoutnft:prepare_list_of_templates:145 - Asset name is not in the dictionary finally
+2022-08-05 12:56:16.090 | ERROR    | sendoutnft:prepare_list_of_templates:140 - Asset name is not in the dictionary: 'Dried Leaf1'
+2022-08-05 12:56:45.491 | ERROR    | sendoutnft:prepare_list_of_templates:140 - Asset name ''Dried Leaf1'' is not in the dictionary
+2022-08-05 12:58:21.079 | ERROR    | sendoutnft:prepare_list_of_templates:139 - Asset name ''Dried Leaf1'' is not in the dictionary and will not be sent.
+2022-08-05 12:58:41.339 | ERROR    | sendoutnft:prepare_list_of_templates:139 - Asset name ''Pinecone1'' is not in the dictionary and will not be sent.
+2022-08-05 12:58:41.339 | ERROR    | sendoutnft:prepare_list_of_templates:139 - Asset name ''Dried Leaf1'' is not in the dictionary and will not be sent.
+2022-08-05 13:14:53.864 | ERROR    | sendoutnft:find_asset_with_highest_mint:115 - Not enough assets available.
+you have: 0
+you need: 2
+2022-08-05 13:19:35.000 | INFO     | sendoutnft:send_nfts_to_user:156 - Sending 2 asset(s) of template 289228
+2022-08-05 13:19:35.360 | ERROR    | sendoutnft:find_asset_with_highest_mint:115 - Not enough assets available.
+you have: 0
+you need: 2
+2022-08-05 13:24:54.706 | INFO     | sendoutnft:send_nfts_to_user:156 - Sending 2 asset(s) of template 289228
+2022-08-05 13:24:55.218 | ERROR    | sendoutnft:find_asset_with_highest_mint:115 - Not enough assets available.
+you have: 0
+you need: 2
+2022-08-05 13:24:55.219 | ERROR    | sendoutnft:send_nfts_to_user:160 - Can't send asset with template '289228'
+2022-08-05 13:24:55.219 | INFO     | sendoutnft:send_nfts_to_user:156 - Sending 3 asset(s) of template 265138
+2022-08-05 13:24:55.630 | ERROR    | sendoutnft:find_asset_with_highest_mint:115 - Not enough assets available.
+you have: 0
+you need: 3
+2022-08-05 13:24:55.630 | ERROR    | sendoutnft:send_nfts_to_user:160 - Can't send asset with template '265138'
+2022-08-05 13:24:55.631 | INFO     | sendoutnft:send_nfts_to_user:156 - Sending 1 asset(s) of template 289221
+2022-08-05 13:24:55.989 | ERROR    | sendoutnft:find_asset_with_highest_mint:115 - Not enough assets available.
+you have: 0
+you need: 1
+2022-08-05 13:24:55.990 | ERROR    | sendoutnft:send_nfts_to_user:160 - Can't send asset with template '289221'
+2022-08-05 13:24:55.990 | INFO     | sendoutnft:send_nfts_to_user:156 - Sending 1 asset(s) of template 529844
+2022-08-05 13:24:56.302 | ERROR    | sendoutnft:find_asset_with_highest_mint:115 - Not enough assets available.
+you have: 0
+you need: 1
+2022-08-05 13:24:56.303 | ERROR    | sendoutnft:send_nfts_to_user:160 - Can't send asset with template '529844'
+2022-08-05 13:24:56.304 | INFO     | sendoutnft:send_nfts_to_user:156 - Sending 1 asset(s) of template 265148
+2022-08-05 13:24:56.590 | ERROR    | sendoutnft:find_asset_with_highest_mint:115 - Not enough assets available.
+you have: 0
+you need: 1
+2022-08-05 13:24:56.590 | ERROR    | sendoutnft:send_nfts_to_user:160 - Can't send asset with template '265148'
+2022-08-05 13:30:02.334 | INFO     | sendoutnft:send_nfts_to_user:154 - Trying to send 2 asset(s) of template 289228
+2022-08-05 13:30:02.861 | ERROR    | sendoutnft:find_asset_with_highest_mint:115 - Not enough assets available. Have: 0; Need: 2
+2022-08-05 13:30:02.862 | ERROR    | sendoutnft:send_nfts_to_user:158 - Can't send asset with template '289228'
+2022-08-05 13:30:02.862 | INFO     | sendoutnft:send_nfts_to_user:154 - Trying to send 3 asset(s) of template 265138
+2022-08-05 13:30:03.230 | ERROR    | sendoutnft:find_asset_with_highest_mint:115 - Not enough assets available. Have: 0; Need: 3
+2022-08-05 13:30:03.231 | ERROR    | sendoutnft:send_nfts_to_user:158 - Can't send asset with template '265138'
+2022-08-05 13:30:03.231 | INFO     | sendoutnft:send_nfts_to_user:154 - Trying to send 1 asset(s) of template 289221
+2022-08-05 13:30:03.602 | ERROR    | sendoutnft:find_asset_with_highest_mint:115 - Not enough assets available. Have: 0; Need: 1
+2022-08-05 13:30:03.603 | ERROR    | sendoutnft:send_nfts_to_user:158 - Can't send asset with template '289221'
+2022-08-05 13:30:03.604 | INFO     | sendoutnft:send_nfts_to_user:154 - Trying to send 1 asset(s) of template 529844
+2022-08-05 13:30:03.958 | ERROR    | sendoutnft:find_asset_with_highest_mint:115 - Not enough assets available. Have: 0; Need: 1
+2022-08-05 13:30:03.958 | ERROR    | sendoutnft:send_nfts_to_user:158 - Can't send asset with template '529844'
+2022-08-05 13:30:03.958 | INFO     | sendoutnft:send_nfts_to_user:154 - Trying to send 1 asset(s) of template 265148
+2022-08-05 13:30:04.327 | ERROR    | sendoutnft:find_asset_with_highest_mint:115 - Not enough assets available. Have: 0; Need: 1
+2022-08-05 13:30:04.327 | ERROR    | sendoutnft:send_nfts_to_user:158 - Can't send asset with template '265148'
+2022-08-05 13:31:23.185 | INFO     | sendoutnft:send_nfts_to_user:154 - Trying to send 2 asset(s) of template 289228
+2022-08-05 13:31:23.568 | ERROR    | sendoutnft:find_asset_with_highest_mint:115 - Not enough assets available. Have: 0; Need: 2
+2022-08-05 13:31:23.568 | ERROR    | sendoutnft:send_nfts_to_user:158 - Can't send asset with template '289228'
+2022-08-05 13:31:23.569 | INFO     | sendoutnft:send_nfts_to_user:154 - Trying to send 3 asset(s) of template 265138
+2022-08-05 13:31:24.071 | ERROR    | sendoutnft:find_asset_with_highest_mint:115 - Not enough assets available. Have: 0; Need: 3
+2022-08-05 13:31:24.071 | ERROR    | sendoutnft:send_nfts_to_user:158 - Can't send asset with template '265138'
+2022-08-05 13:31:24.072 | INFO     | sendoutnft:send_nfts_to_user:154 - Trying to send 1 asset(s) of template 289221
+2022-08-05 13:31:24.454 | ERROR    | sendoutnft:find_asset_with_highest_mint:115 - Not enough assets available. Have: 0; Need: 1
+2022-08-05 13:31:24.454 | ERROR    | sendoutnft:send_nfts_to_user:158 - Can't send asset with template '289221'
+2022-08-05 13:31:24.455 | INFO     | sendoutnft:send_nfts_to_user:154 - Trying to send 1 asset(s) of template 529844
+2022-08-05 13:31:24.882 | ERROR    | sendoutnft:find_asset_with_highest_mint:115 - Not enough assets available. Have: 0; Need: 1
+2022-08-05 13:31:24.883 | ERROR    | sendoutnft:send_nfts_to_user:158 - Can't send asset with template '529844'
+2022-08-05 13:31:24.883 | INFO     | sendoutnft:send_nfts_to_user:154 - Trying to send 1 asset(s) of template 265148
+2022-08-05 13:31:25.247 | ERROR    | sendoutnft:find_asset_with_highest_mint:115 - Not enough assets available. Have: 0; Need: 1
+2022-08-05 13:31:25.247 | ERROR    | sendoutnft:send_nfts_to_user:158 - Can't send asset with template '265148'
+2022-08-05 13:33:13.581 | INFO     | sendoutnft:send_nfts_to_user:154 - Trying to send 1 asset(s) of template 289228
+2022-08-05 13:33:13.910 | ERROR    | sendoutnft:find_asset_with_highest_mint:115 - Not enough assets available. Have: 0; Need: 1
+2022-08-05 13:33:13.911 | ERROR    | sendoutnft:send_nfts_to_user:158 - Can't send asset with template '289228'
+2022-08-05 13:33:13.911 | INFO     | sendoutnft:send_nfts_to_user:154 - Trying to send 2 asset(s) of template 265138
+2022-08-05 13:33:14.250 | ERROR    | sendoutnft:find_asset_with_highest_mint:115 - Not enough assets available. Have: 0; Need: 2
+2022-08-05 13:33:14.250 | ERROR    | sendoutnft:send_nfts_to_user:158 - Can't send asset with template '265138'
+2022-08-05 13:34:16.024 | INFO     | sendoutnft:send_nfts_to_user:154 - Trying to send 1 asset(s) of template 289228
+2022-08-05 13:34:16.480 | ERROR    | sendoutnft:find_asset_with_highest_mint:115 - Not enough assets available. Have: 0; Need: 1
+2022-08-05 13:34:16.481 | ERROR    | sendoutnft:send_nfts_to_user:158 - Can't send asset with template '289228'
+2022-08-05 13:34:16.481 | INFO     | sendoutnft:send_nfts_to_user:154 - Trying to send 2 asset(s) of template 265138
+2022-08-05 13:34:17.046 | ERROR    | sendoutnft:find_asset_with_highest_mint:115 - Not enough assets available. Have: 0; Need: 2
+2022-08-05 13:34:17.046 | ERROR    | sendoutnft:send_nfts_to_user:158 - Can't send asset with template '265138'
+2022-08-05 13:34:17.047 | INFO     | sendoutnft:send_nfts_to_user:154 - Trying to send 1 asset(s) of template 289221
+2022-08-05 13:34:17.506 | ERROR    | sendoutnft:find_asset_with_highest_mint:115 - Not enough assets available. Have: 0; Need: 1
+2022-08-05 13:34:17.507 | ERROR    | sendoutnft:send_nfts_to_user:158 - Can't send asset with template '289221'
