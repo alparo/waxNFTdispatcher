@@ -1,5 +1,5 @@
 from sendoutnft import  prepare_list_of_templates, \
-    send_nfts_to_user, COLLECTION_WALLET
+    send_assets_to_wallet, COLLECTION_WALLET
 
 INPUT = [
     "Grass Tuft",
@@ -14,4 +14,4 @@ INPUT = [
 
 recipient = "thisismyseco"
 
-send_nfts_to_user(recipient, COLLECTION_WALLET, INPUT)
+send_assets_to_wallet(INPUT, recipient)
