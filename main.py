@@ -1,4 +1,4 @@
-from sendoutnft import send_assets_to_wallet, mint_asset
+from nft_hopper import send_assets_to_wallet, send_mint_transaction
 
 INPUT = [
     "Grass Tuft",
@@ -14,4 +14,4 @@ INPUT = [
 recipient = "thisismyseco"
 
 #send_assets_to_wallet(INPUT, recipient)
-mint_asset("thisismyfirs", "cxctestnet12", "123", "338280", "thisismyfirs")
+send_mint_transaction("thisismyfirs", "cxctestnet12", "123", "338280", "thisismyseco")

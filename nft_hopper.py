@@ -25,11 +25,14 @@ DICT = {
 }
 
 
-def send_blockchain_transaction(assets: list, recipient: str, memo: str = ""):
+def send_transfer_transaction(
+    asset_ids: list, to: str, from_wallet: str = COLLECTION_WALLET, memo: str = ""
+):
     """
     Sends given assets from SENDER wallet to given recipient wallet
-    :param assets: must be list, like [123456789, ]
-    :param recipient: string with receiver wallet
+    :param asset_ids: must be list, like [123456789, ]
+    :param to: string with receiver wallet
+    :param from_wallet: collection wallet
     :param memo: optional self-explanatory parameter
     :return: TX ID or 'False' if TX failed.
     """
@@ -37,15 +40,15 @@ def send_blockchain_transaction(assets: list, recipient: str, memo: str = ""):
     data = [
         eospyo.Data(
             name="from",
-            value=eospyo.types.Name(COLLECTION_WALLET),
+            value=eospyo.types.Name(from_wallet),
         ),
         eospyo.Data(
             name="to",
-            value=eospyo.types.Name(recipient),
+            value=eospyo.types.Name(to),
         ),
         eospyo.Data(
             name="asset_ids",
-            value=eospyo.types.Array(values=assets, type_=eospyo.types.Uint64),
+            value=eospyo.types.Array(values=asset_ids, type_=eospyo.types.Uint64),
         ),
         eospyo.Data(
             name="memo",
@@ -129,6 +132,7 @@ def find_assets_with_highest_mints(
             logger.error(
                 f"Not enough assets available. Have: {len(asset_ids)}; Need: {quantity_requested}"
             )
+            logger.info(f"Minting {quantity_requested - len(asset_ids)} more assets with template '{template_id}'...")
             # TO-DO here will come the logic to mint missing assets.
             break
     return asset_ids
@@ -195,7 +199,7 @@ def send_assets_to_wallet(
         logger.info(
             f"Going to send following assets:{assets_to_send} to the wallet '{wallet}'"
         )
-        tx_return_status = send_blockchain_transaction(assets_to_send, wallet, memo)
+        tx_return_status = send_transfer_transaction(assets_to_send, wallet, memo)
         if tx_return_status:
             logger.info(f"Successful: {tx_return_status}")
         else:
@@ -203,7 +207,16 @@ def send_assets_to_wallet(
         return tx_return_status
 
 
-def mint_asset(authorized_minter, collection_name, schema_name, template_id, new_asset_owner):
+def send_mint_transaction(
+    authorized_minter: str,
+    collection_name: str,
+    schema_name: str,
+    template_id: str,
+    new_asset_owner: str,
+    immutable_data: list = [],
+    mutable_data: list = [],
+    tokens_to_back: str = "0.00000000 WAX",
+):
     """
 
     :param authorized_minter:
@@ -234,6 +247,18 @@ def mint_asset(authorized_minter, collection_name, schema_name, template_id, new
         eospyo.Data(
             name="new_asset_owner",
             value=eospyo.types.Name(new_asset_owner),
+        ),
+        eospyo.Data(
+            name="immutable_data",
+            value=eospyo.types.Array(values=immutable_data, type_=eospyo.types.Array),
+        ),
+        eospyo.Data(
+            name="mutable_data",
+            value=eospyo.types.Array(values=mutable_data, type_=eospyo.types.Array),
+        ),
+        eospyo.Data(
+            name="tokens_to_back",
+            value=eospyo.types.Asset(tokens_to_back),
         ),
     ]
     auth = eospyo.Authorization(actor=COLLECTION_WALLET, permission="active")
