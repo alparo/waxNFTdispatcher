@@ -1,15 +1,13 @@
 import os
 import eospyo
 from loguru import logger
-
 import requests
-
 from collections import Counter
 
 ENTRYPOINT = "https://test.wax.api.atomicassets.io/atomicassets/v1"
 ENTRYPOINT_ASSETS = f"{ENTRYPOINT}/assets"
 KEY = os.environ["PRIVATE_KEY"]
-#SENDER = "pixeltycoons"
+# SENDER = "pixeltycoons"
 COLLECTION_WALLET = "thisismyfirs"
 COLLECTION = "cxctestnet12"
 logger.add("sendoutnft.log", format="{time} {level} {message}", retention="1 week")
@@ -76,6 +74,85 @@ def send_transfer_transaction(
     except KeyError:
         logger.error(resp["error"]["details"][0]["message"])
         return False
+
+
+def send_mint_transaction(
+    authorized_minter: str,
+    collection_name: str,
+    schema_name: str,
+    template_id: str,
+    new_asset_owner: str,
+    immutable_data: list = [],
+    mutable_data: list = [],
+    tokens_to_back: str = "0.00000000 WAX",
+):
+    """
+    :param authorized_minter:
+    :param collection_name:
+    :param schema_name:
+    :param template_id:
+    :param new_asset_owner:
+    :param immutable_data:
+    :param mutable_data:
+    :param tokens_to_back:
+    :return: TX ID or 'False' if TX failed.
+    """
+    logger.info("Creating Transaction...")
+    data = [
+        eospyo.Data(
+            name="authorized_minter",
+            value=eospyo.types.Name(authorized_minter),
+        ),
+        eospyo.Data(
+            name="collection_name",
+            value=eospyo.types.Name(collection_name),
+        ),
+        eospyo.Data(
+            name="schema_name",
+            value=eospyo.types.Name(schema_name),
+        ),
+        eospyo.Data(
+            name="template_id",
+            value=eospyo.types.Uint32(template_id),
+        ),
+        eospyo.Data(
+            name="new_asset_owner",
+            value=eospyo.types.Name(new_asset_owner),
+        ),
+        eospyo.Data(
+            name="immutable_data",
+            value=eospyo.types.Array(values=immutable_data, type_=eospyo.types.Array),
+        ),
+        eospyo.Data(
+            name="mutable_data",
+            value=eospyo.types.Array(values=mutable_data, type_=eospyo.types.Array),
+        ),
+        eospyo.Data(
+            name="tokens_to_back",
+            value=eospyo.types.Asset(tokens_to_back),
+        ),
+    ]
+    auth = eospyo.Authorization(actor=COLLECTION_WALLET, permission="active")
+    action = eospyo.Action(
+        account="atomicassets",  # this is the contract account
+        name="mintasset",  # this is the action name
+        data=data,
+        authorization=[auth],
+    )
+    raw_transaction = eospyo.Transaction(actions=[action])
+    logger.debug("Linking transaction to the network...")
+    net = eospyo.WaxTestnet()  # this is an alias for a testnet node
+    linked_transaction = raw_transaction.link(net=net)
+    logger.debug("Signing transaction...")
+    signed_transaction = linked_transaction.sign(key=KEY)
+    logger.debug("Sending transaction to the blockchain...")
+    resp = signed_transaction.send()
+    try:
+        return resp["transaction_id"]
+    except KeyError:
+        logger.error(resp["error"]["details"][0]["message"])
+        return False
+    pass
 
 
 def get_available_assets(
@@ -159,87 +236,6 @@ def prepare_list_of_templates(asset_names: list):
     return dict_with_counted_templates.items()
 
 
-def get_schema_name(template):
-    pass
-
-
-def send_mint_transaction(
-    authorized_minter: str,
-    collection_name: str,
-    schema_name: str,
-    template_id: str,
-    new_asset_owner: str,
-    immutable_data: list = [],
-    mutable_data: list = [],
-    tokens_to_back: str = "0.00000000 WAX",
-):
-    """
-
-    :param authorized_minter:
-    :param collection_name:
-    :param schema_name:
-    :param template_id:
-    :param new_asset_owner:
-    :return: TX ID or 'False' if TX failed.
-    """
-    logger.info("Creating Transaction...")
-    data = [
-        eospyo.Data(
-            name="authorized_minter",
-            value=eospyo.types.Name(authorized_minter),
-        ),
-        eospyo.Data(
-            name="collection_name",
-            value=eospyo.types.Name(collection_name),
-        ),
-        eospyo.Data(
-            name="schema_name",
-            value=eospyo.types.Name(schema_name),
-        ),
-        eospyo.Data(
-            name="template_id",
-            value=eospyo.types.Uint32(template_id),
-        ),
-        eospyo.Data(
-            name="new_asset_owner",
-            value=eospyo.types.Name(new_asset_owner),
-        ),
-        eospyo.Data(
-            name="immutable_data",
-            value=eospyo.types.Array(values=immutable_data, type_=eospyo.types.Array),
-        ),
-        eospyo.Data(
-            name="mutable_data",
-            value=eospyo.types.Array(values=mutable_data, type_=eospyo.types.Array),
-        ),
-        eospyo.Data(
-            name="tokens_to_back",
-            value=eospyo.types.Asset(tokens_to_back),
-        ),
-    ]
-    auth = eospyo.Authorization(actor=COLLECTION_WALLET, permission="active")
-    action = eospyo.Action(
-        account="atomicassets",  # this is the contract account
-        name="mintasset",  # this is the action name
-        data=data,
-        authorization=[auth],
-    )
-    raw_transaction = eospyo.Transaction(actions=[action])
-    logger.debug("Linking transaction to the network...")
-    net = eospyo.WaxTestnet()  # this is an alias for a testnet node
-    linked_transaction = raw_transaction.link(net=net)
-    logger.debug("Signing transaction...")
-    signed_transaction = linked_transaction.sign(key=KEY)
-    logger.debug("Sending transaction to the blockchain...")
-    resp = signed_transaction.send()
-    try:
-        return resp["transaction_id"]
-    except KeyError:
-        logger.error(resp["error"]["details"][0]["message"])
-        return False
-    pass
-
-
 def send_assets_to_wallet(
     asset_names: list,
     wallet: str,
@@ -286,7 +282,7 @@ def send_assets_to_wallet(
                 minting_tx = send_mint_transaction(
                     COLLECTION_WALLET,
                     COLLECTION,
-                    #get_schema_name(template),
+                    # get_schema_name(template),
                     "123",
                     template,
                     wallet,
