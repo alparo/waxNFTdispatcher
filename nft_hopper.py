@@ -129,11 +129,14 @@ def find_assets_with_highest_mints(
                 )
             asset_number += 1
         except IndexError:
+            quantity_available = {len(asset_ids)}
             logger.error(
-                f"Not enough assets available. Have: {len(asset_ids)}; Need: {quantity_requested}"
+                f"Not enough assets available. Have: {quantity_available}; Need: {quantity_requested}"
             )
-            logger.info(f"Minting {quantity_requested - len(asset_ids)} more assets with template '{template_id}'...")
+            need_to_mint = quantity_requested - quantity_available
+            logger.info(f"Minting {need_to_mint} more assets with template '{template_id}'...")
             # TO-DO here will come the logic to mint missing assets.
+            # send_mint_transaction(COLLECTION_WALLET, COLLECTION, schema, template_id, )
             break
     return asset_ids
 
@@ -271,7 +274,6 @@ def send_mint_transaction(
     raw_transaction = eospyo.Transaction(actions=[action])
     logger.info("Linking transaction to the network...")
     net = eospyo.WaxTestnet()  # this is an alias for a testnet node
-    # notice that eospyo returns a new object instead of change in place
     linked_transaction = raw_transaction.link(net=net)
     logger.info("Signing transaction...")
     signed_transaction = linked_transaction.sign(key=KEY)
