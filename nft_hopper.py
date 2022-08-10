@@ -9,16 +9,16 @@ from collections import Counter
 ENTRYPOINT = "https://test.wax.api.atomicassets.io/atomicassets/v1"
 ENTRYPOINT_ASSETS = f"{ENTRYPOINT}/assets"
 KEY = os.environ["PRIVATE_KEY"]
-SENDER = "pixeltycoons"
+#SENDER = "pixeltycoons"
 COLLECTION_WALLET = "thisismyfirs"
-COLLECTION = "gen1pokemon1"
+COLLECTION = "cxctestnet12"
 logger.add("sendoutnft.log", format="{time} {level} {message}", retention="1 week")
 
 DICT = {
     # "Grass Tuft": "289228",
     "Grass Tuft": "64",
     # "Dried Leaf": "265138",
-    "Dried Leaf": "42",
+    "Dried Leaf": "338280",
     "Pinecone": "289221",
     "Big Flat Stone": "529844",
     "Granite Stone": "265148",
@@ -26,7 +26,7 @@ DICT = {
 
 
 def send_transfer_transaction(
-    asset_ids: list, to: str, from_wallet: str = COLLECTION_WALLET, memo: str = ""
+    asset_ids: list, to: str, from_wallet: str, memo: str = ""
 ):
     """
     Sends given assets from SENDER wallet to given recipient wallet
@@ -63,13 +63,13 @@ def send_transfer_transaction(
         authorization=[auth],
     )
     raw_transaction = eospyo.Transaction(actions=[action])
-    logger.info("Linking transaction to the network...")
+    logger.debug("Linking transaction to the network...")
     net = eospyo.WaxTestnet()  # this is an alias for a testnet node
     # notice that eospyo returns a new object instead of change in place
     linked_transaction = raw_transaction.link(net=net)
-    logger.info("Signing transaction...")
+    logger.debug("Signing transaction...")
     signed_transaction = linked_transaction.sign(key=KEY)
-    logger.info("Sending transaction to the blockchain...")
+    logger.debug("Sending transaction to the blockchain...")
     resp = signed_transaction.send()
     try:
         return resp["transaction_id"]
@@ -117,6 +117,7 @@ def find_assets_with_highest_mints(
     # extract asset_ids from reply data
     asset_ids = []
     asset_number = 0
+    quantity_to_mint = 0
     while len(asset_ids) < quantity_requested:
         try:
             if (
@@ -129,16 +130,13 @@ def find_assets_with_highest_mints(
                 )
             asset_number += 1
         except IndexError:
-            quantity_available = {len(asset_ids)}
-            logger.error(
+            quantity_available = len(asset_ids)
+            logger.warning(
                 f"Not enough assets available. Have: {quantity_available}; Need: {quantity_requested}"
             )
-            need_to_mint = quantity_requested - quantity_available
-            logger.info(f"Minting {need_to_mint} more assets with template '{template_id}'...")
-            # TO-DO here will come the logic to mint missing assets.
-            # send_mint_transaction(COLLECTION_WALLET, COLLECTION, schema, template_id, )
+            quantity_to_mint = quantity_requested - quantity_available
             break
-    return asset_ids
+    return asset_ids, quantity_to_mint
 
 
 def prepare_list_of_templates(asset_names: list):
@@ -161,53 +159,8 @@ def prepare_list_of_templates(asset_names: list):
     return dict_with_counted_templates.items()
 
 
-def send_assets_to_wallet(
-    asset_names: list,
-    wallet: str,
-    collection_wallet: str = COLLECTION_WALLET,
-    memo: str = "",
-):
-    """
-    :param wallet: recipient wallet
-    :param collection_wallet: collection wallet with all the assets
-    :param asset_names: list with asset names e.g. ["Grass Tuft", "Dried Leaf", "Dried Leaf", "Pinecone"]
-    :param memo: transaction memo
-    :return: TX ID or 'False' if TX failed.
-    """
-    templates_and_quantities = prepare_list_of_templates(asset_names)
-    logger.info(f"*** Requested to send {templates_and_quantities}")
-    # Convert dict into list with templates
-    template_list = [template[0] for template in templates_and_quantities]
-
-    # make a request to blockchain to get available assets with given template_ids
-    if template_list:
-        api_response = get_available_assets(
-            collection_wallet, COLLECTION, template_list
-        )
-    else:
-        logger.error("Template list is empty")
-        return
-
-    assets_to_send = []
-    for template, quantity in templates_and_quantities:
-        logger.info(
-            f"Searching in stock for {quantity} asset(s) with template {template}"
-        )
-        assets_to_send.extend(
-            find_assets_with_highest_mints(api_response, template, quantity)
-        )
-
-    # assets_to_send = None
-    if assets_to_send:
-        logger.info(
-            f"Going to send following assets:{assets_to_send} to the wallet '{wallet}'"
-        )
-        tx_return_status = send_transfer_transaction(assets_to_send, wallet, memo)
-        if tx_return_status:
-            logger.info(f"Successful: {tx_return_status}")
-        else:
-            logger.error(f"TX failed")
-        return tx_return_status
+def get_schema_name(template):
+    pass
 
 
 def send_mint_transaction(
@@ -272,12 +225,12 @@ def send_mint_transaction(
         authorization=[auth],
     )
     raw_transaction = eospyo.Transaction(actions=[action])
-    logger.info("Linking transaction to the network...")
+    logger.debug("Linking transaction to the network...")
     net = eospyo.WaxTestnet()  # this is an alias for a testnet node
     linked_transaction = raw_transaction.link(net=net)
-    logger.info("Signing transaction...")
+    logger.debug("Signing transaction...")
     signed_transaction = linked_transaction.sign(key=KEY)
-    logger.info("Sending transaction to the blockchain...")
+    logger.debug("Sending transaction to the blockchain...")
     resp = signed_transaction.send()
     try:
         return resp["transaction_id"]
@@ -285,3 +238,76 @@ def send_mint_transaction(
         logger.error(resp["error"]["details"][0]["message"])
         return False
     pass
+
+
+def send_assets_to_wallet(
+    asset_names: list,
+    wallet: str,
+    collection_wallet: str = COLLECTION_WALLET,
+    memo: str = "",
+):
+    """
+    :param wallet: recipient wallet
+    :param collection_wallet: collection wallet with all the assets
+    :param asset_names: list with asset names e.g. ["Grass Tuft", "Dried Leaf", "Dried Leaf", "Pinecone"]
+    :param memo: transaction memo
+    :return: TX ID or 'False' if TX failed.
+    """
+    templates_and_quantities = prepare_list_of_templates(asset_names)
+    logger.info(f"*** Requested to send {templates_and_quantities} to wallet '{wallet}'")
+    # Convert dict into list with templates
+    template_list = [template[0] for template in templates_and_quantities]
+
+    # make a request to blockchain to get available assets with given template_ids
+    if template_list:
+        api_response = get_available_assets(
+            collection_wallet, COLLECTION, template_list
+        )
+    else:
+        logger.error("Template list is empty")
+        return
+
+    assets_to_send = []
+    for template, quantity in templates_and_quantities:
+        logger.info(
+            f"Searching in stock for {quantity} asset(s) with template '{template}'"
+        )
+        found_assets, need_to_mint = find_assets_with_highest_mints(
+            api_response, template, quantity
+        )
+        if found_assets:
+            assets_to_send.extend(found_assets)
+        if need_to_mint > 0:
+            logger.info(
+                f"Going to mint {need_to_mint} assets with template '{template}' to the wallet '{wallet}'"
+            )
+            minted_quantity = 0
+            while minted_quantity < need_to_mint:
+                minting_tx = send_mint_transaction(
+                    COLLECTION_WALLET,
+                    COLLECTION,
+                    #get_schema_name(template),
+                    "123",
+                    template,
+                    wallet,
+                )
+                if minting_tx:
+                    minted_quantity += 1
+                    logger.info(f"Successfully minted: {minting_tx}")
+                else:
+                    logger.critical(
+                        f"Failed to mint asset with template '{template}'. Manual intervention is needed!"
+                    )
+                    break
+
+    # assets_to_send = None
+    if assets_to_send:
+        logger.info(
+            f"Going to send following assets: {assets_to_send} to the wallet '{wallet}'"
+        )
+        tx_return_status = send_transfer_transaction(assets_to_send, wallet, collection_wallet, memo)
+        if tx_return_status:
+            logger.info(f"Successfully sent: {tx_return_status}")
+        else:
+            logger.error(f"TX failed")
+        return tx_return_status
