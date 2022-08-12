@@ -1,23 +1,13 @@
 from nft_hopper import Collection
 import os
 
-key = os.environ["PRIVATE_KEY"]
+private_key = os.environ["PRIVATE_KEY"]
 entrypoint = "https://test.wax.api.atomicassets.io/atomicassets/v1"
-collection_wallet = "thisismyseco"
+collection_wallet = "thisismyfirs"
 collection = "cxctestnet12"
-INPUT = [
-    "Dried Leaf",
-]
-#     "Big Flat Stone",
-#     "Granite Stone",
-#     "Grass Tuft",
-#     "Dried Leaf",
-# ]
-
 recipient = "thisismyseco"
+INPUT = [("123", 338280), ("123", 338280)]
 
-# send_assets_to_wallet(INPUT, recipient)
 
-test_collection = Collection(collection, collection_wallet, key, entrypoint)
-print(test_collection.get_available_assets([338280, 289221]))
-
+test_collection = Collection(collection, collection_wallet, private_key, entrypoint)
+test_collection.send_or_mint_assets_to_wallet(INPUT, recipient)

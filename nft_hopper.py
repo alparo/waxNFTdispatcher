@@ -3,21 +3,8 @@ from loguru import logger
 import requests
 from collections import Counter
 
-
 logger.add("sendoutnft.log", format="{time} {level} {message}", retention="1 week")
 
-DICT = {
-    # "Grass Tuft": "289228",
-    "Grass Tuft": "64",
-    # "Dried Leaf": "265138",
-    "Dried Leaf": "338280",
-    "Pinecone": "289221",
-    "Big Flat Stone": "529844",
-    "Granite Stone": "265148",
-}
-
-
-# Class
 class Collection:
     def __init__(
             self,
@@ -36,17 +23,20 @@ class Collection:
 
     def get_available_assets(
             self,
-            template_list: list,
+            schema_template_list: list,
             sorting_key: str = "asset_id",
     ):
         """
         Make request to blockchain to get available assets with given template IDs
-        :param template_list: list with templates to search. E.g. [338280, 289221]
+        :param schema_template_list: list of (schema, template) tuples.
+                E.g. [("rawmaterials", 318738), ("magmaterials", 416529)]
         :param sorting_key: self-explanatory, default "asset_id"
-        :return: API response with all found assets sorted by default by highest asset ID
+        :return: API response with all found assets sorted by default by the highest asset ID
         """
-        # convert list to comma separated string
-        template_list_string = ",".join(str(template) for template in template_list)
+        # Build comma separated string of templates
+        template_list_string = ",".join(str(template[1]) for template in schema_template_list)
+        logger.info(f"Making request to blockchain to find in the collection wallet "
+                    f"following templates: {template_list_string}")
         payload = {
             "owner": self.collection_wallet,
             "template_whitelist": template_list_string,
@@ -55,98 +45,17 @@ class Collection:
         response = requests.get(self.entrypoint_assets, params=payload)
         return response.json()
 
-    def send_assets_to_wallet(
-            self,
-            asset_names: list,
-            wallet: str,
-            memo: str = "",
-    ):
-        """
-        :param wallet: recipient wallet
-        :param asset_names: list with asset names e.g. ["Grass Tuft", "Dried Leaf", "Dried Leaf", "Pinecone"]
-        :param memo: transaction memo
-        :return: TX ID or 'False' if TX failed.
-        """
-        templates_and_quantities = self.prepare_list_of_templates(asset_names)
-        logger.info(
-            f"*** Requested to send {templates_and_quantities} to wallet '{wallet}'"
-        )
-        # Convert dict into list with templates
-        template_list = [template[0] for template in templates_and_quantities]
-
-        # make a request to blockchain to get available assets with given template_ids
-        if template_list:
-            api_response = self.get_available_assets(template_list)
-        else:
-            logger.error("Template list is empty")
-            return
-
-        assets_to_send = []
-        for template, quantity in templates_and_quantities:
-            logger.info(
-                f"Searching in stock for {quantity} asset(s) with template '{template}'"
-            )
-            found_assets, need_to_mint = self.find_assets_with_highest_mints(
-                api_response, template, quantity
-            )
-            if found_assets:
-                assets_to_send.extend(found_assets)
-            if need_to_mint > 0:
-                logger.info(
-                    f"Going to mint {need_to_mint} assets with template '{template}' to the wallet '{wallet}'"
-                )
-                minted_quantity = 0
-                while minted_quantity < need_to_mint:
-                    minting_tx = self.send_mint_transaction(
-                        self.collection_wallet,
-                        self.collection,
-                        # get_schema_name(template),
-                        "123",
-                        template,
-                        wallet,
-                    )
-                    if minting_tx:
-                        minted_quantity += 1
-                        logger.info(f"Successfully minted: {minting_tx}")
-                    else:
-                        logger.critical(
-                            f"Failed to mint asset with template '{template}'. Manual intervention is needed!"
-                        )
-                        break
-
-        # assets_to_send = None
-        if assets_to_send:
-            logger.info(
-                f"Going to send following assets: {assets_to_send} to the wallet '{wallet}'"
-            )
-            tx_return_status = self.send_transfer_transaction(
-                assets_to_send, wallet, self.collection_wallet, memo
-            )
-            if tx_return_status:
-                logger.info(f"Successfully sent: {tx_return_status}")
-            else:
-                logger.error(f"TX failed")
-            return tx_return_status
-
     @staticmethod
-    def prepare_list_of_templates(asset_names: list):
+    def collapse_identical_schemas_templates(schema_template_list: list):
         """
-        :param asset_names: list with asset names e.g. ["Grass Tuft", "Dried Leaf", "Dried Leaf", "Pinecone"]
-        :return: class dict_items (list of tuples) with templates and their quantities.
-                 E.g. [(289228, 2), (289221, 1), (529844, 1)]
+        :param schema_template_list: list with (schema, template) tuples.
+                E.g. [("rawmaterials", 318738), ("magmaterials", 416529)]
+        :return: class dict_items (list of tuples) with schemas-templates and their quantities.
+                 E.g. dict_items([(("rawmaterials", 318738), 2), (("magmaterials", 416529), 1)])
         """
-        # Translate asset names into template IDs
-        list_of_templates = []
-        for asset in asset_names:
-            try:
-                list_of_templates.append(DICT[asset])
-            except KeyError as err:
-                logger.error(
-                    f"Asset name '{err}' is not in the dictionary and will not be sent."
-                )
-        # Count duplicates of template IDs and create dictionary
-        dict_with_counted_templates = Counter(list_of_templates)
-        return dict_with_counted_templates.items()
+        # Count duplicates of tuples with schema and template and create dictionary
+        dict_with_counted_schemas_templates = Counter(schema_template_list)
+        return dict_with_counted_schemas_templates.items()
 
     @staticmethod
     def find_assets_with_highest_mints(
@@ -183,7 +92,7 @@ class Collection:
                 break
         return asset_ids, quantity_to_mint
 
-    def send_transfer_transaction(
+    def prepare_transfer_transaction(
             self, asset_ids: list, to: str, from_wallet: str, memo: str = ""
     ):
         """
@@ -220,22 +129,9 @@ class Collection:
             data=data,
             authorization=[auth],
         )
-        raw_transaction = eospyo.Transaction(actions=[action])
-        logger.debug("Linking transaction to the network...")
-        net = eospyo.WaxTestnet()  # this is an alias for a testnet node
-        # notice that eospyo returns a new object instead of change in place
-        linked_transaction = raw_transaction.link(net=net)
-        logger.debug("Signing transaction...")
-        signed_transaction = linked_transaction.sign(key=self.private_key)
-        logger.debug("Sending transaction to the blockchain...")
-        resp = signed_transaction.send()
-        try:
-            return resp["transaction_id"]
-        except KeyError:
-            logger.error(resp["error"]["details"][0]["message"])
-            return False
+        return action
 
-    def send_mint_transaction(
+    def prepare_mint_transaction(
             self,
             authorized_minter: str,
             collection_name: str,
@@ -299,6 +195,9 @@ class Collection:
             data=data,
             authorization=[auth],
         )
+        return action
+
+    def send_transaction(self, action):
         raw_transaction = eospyo.Transaction(actions=[action])
         logger.debug("Linking transaction to the network...")
         net = eospyo.WaxTestnet()  # this is an alias for a testnet node
@@ -313,3 +212,74 @@ class Collection:
             logger.error(resp["error"]["details"][0]["message"])
             return False
         pass
+
+    def send_or_mint_assets_to_wallet(
+            self,
+            schema_template_list: list,
+            wallet: str,
+            memo: str = "",
+    ):
+        """
+        :param wallet: recipient wallet
+        :param schema_template_list: list of tuples containing schema names and template IDs
+         e.g. [("rawmaterials", 318738), ("magmaterials", 416529)]
+        :param memo: transaction memo
+        :return: TX ID or 'False' if TX failed.
+        """
+        schemas_templates_quantities = self.collapse_identical_schemas_templates(schema_template_list)
+        logger.info(
+            f"*** Requested to send {schemas_templates_quantities} to wallet '{wallet}'"
+        )
+        # make a request to blockchain to get available assets with given template_ids
+        if schema_template_list:
+            api_response = self.get_available_assets(schema_template_list)
+        else:
+            logger.error("Schema-template list is empty")
+            return
+
+        assets_to_send = []
+        for schema_template, quantity in schemas_templates_quantities:
+            schema = schema_template[0]
+            template = str(schema_template[1])
+            logger.info(
+                f"Searching in stock for {quantity} asset(s) with template '{template}'"
+            )
+            found_assets, need_to_mint = self.find_assets_with_highest_mints(
+                api_response, template, quantity
+            )
+            if found_assets:
+                assets_to_send.extend(found_assets)
+            if need_to_mint > 0:
+                logger.info(
+                    f"Going to mint {need_to_mint} assets with template '{template}' to the wallet '{wallet}'"
+                )
+                minted_quantity = 0
+                while minted_quantity < need_to_mint:
+                    minting_tx = self.send_transaction(self.prepare_mint_transaction(
+                        self.collection_wallet,
+                        self.collection,
+                        schema,
+                        template,
+                        wallet,
+                    ))
+                    if minting_tx:
+                        minted_quantity += 1
+                        logger.info(f"Successfully minted: {minting_tx}")
+                    else:
+                        logger.critical(
+                            f"Failed to mint asset with schema, template '{schema_template}'. Manual intervention is needed!"
+                        )
+                        break
+
+        if assets_to_send:
+            logger.info(
+                f"Going to send following assets: {assets_to_send} to the wallet '{wallet}'"
+            )
+            tx_return_status = self.send_transaction(self.prepare_transfer_transaction(
+                assets_to_send, wallet, self.collection_wallet, memo
+            ))
+            if tx_return_status:
+                logger.info(f"Successfully sent: {tx_return_status}")
+            else:
+                logger.error(f"TX failed")
+            return tx_return_status
