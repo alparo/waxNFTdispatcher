@@ -5,16 +5,21 @@ from collections import Counter
 
 logger.add("sendoutnft.log", format="{time} {level} {message}", retention="1 week")
 
+
 class Collection:
     def __init__(
-            self,
-            collection,
-            collection_wallet,
-            private_key,
-            api_entrypoint,
+        self,
+        collection: str,
+        collection_wallet: str,
+        private_key: str,
+        api_entrypoint: str,
     ):
         """
-        :param collection_wallet: collection wallet which owns the assets
+        Constructor
+        :param collection: Collection which assets are going to be transferred or minted
+        :param collection_wallet: wallet which holds the assets
+        :param private_key: private key from the collection_wallet
+        :param api_entrypoint: API URL address
         """
         self.collection = collection
         self.collection_wallet = collection_wallet
@@ -22,21 +27,25 @@ class Collection:
         self.entrypoint_assets = f"{api_entrypoint}/assets"
 
     def get_available_assets(
-            self,
-            schema_template_list: list,
-            sorting_key: str = "asset_id",
+        self,
+        schema_template_list: list,
+        sorting_key: str = "asset_id",
     ):
         """
-        Make request to blockchain to get available assets with given template IDs
+        Make request to blockchain to get available assets in collection wallet with given template IDs
         :param schema_template_list: list of (schema, template) tuples.
                 E.g. [("rawmaterials", 318738), ("magmaterials", 416529)]
         :param sorting_key: self-explanatory, default "asset_id"
         :return: API response with all found assets sorted by default by the highest asset ID
         """
         # Build comma separated string of templates
-        template_list_string = ",".join(str(template[1]) for template in schema_template_list)
-        logger.info(f"Making request to blockchain to find in the collection wallet "
-                    f"following templates: {template_list_string}")
+        template_list_string = ",".join(
+            str(template[1]) for template in schema_template_list
+        )
+        logger.info(
+            f"Making request to blockchain to find in the collection wallet "
+            f"following templates: {template_list_string}"
+        )
         payload = {
             "owner": self.collection_wallet,
             "template_whitelist": template_list_string,
@@ -59,12 +68,12 @@ class Collection:
 
     @staticmethod
     def find_assets_with_highest_mints(
-            api_response, template_id: str, quantity_requested: int = 1
+        api_response, template_id: str, quantity_requested: int = 1
     ):
         """
-        Finds in collection_wallet given quantity of assets with given template
+        Finds in collection wallet given quantity of assets with given template
         :param api_response: data received from blockchain
-        :param template_id: only one template ID per function run
+        :param template_id: self-explanatory. Only one template ID per function run
         :param quantity_requested: how many assets with given template ID must be found
         :return: list of found asset IDs
         """
@@ -75,8 +84,8 @@ class Collection:
         while len(asset_ids) < quantity_requested:
             try:
                 if (
-                        api_response["data"][asset_number]["template"]["template_id"]
-                        == template_id
+                    api_response["data"][asset_number]["template"]["template_id"]
+                    == template_id
                 ):
                     asset_ids.append(api_response["data"][asset_number]["asset_id"])
                     logger.info(
@@ -93,12 +102,12 @@ class Collection:
         return asset_ids, quantity_to_mint
 
     def prepare_transfer_transaction(
-            self, asset_ids: list, to: str, from_wallet: str, memo: str = ""
+        self, asset_ids: list, to: str, from_wallet: str, memo: str = ""
     ):
         """
         Sends given assets from SENDER wallet to given recipient wallet
         :param asset_ids: must be list, like [123456789, ]
-        :param to: string with receiver wallet
+        :param to: string with recipient wallet
         :param from_wallet: collection wallet
         :param memo: optional self-explanatory parameter
         :return: TX ID or 'False' if TX failed.
@@ -132,25 +141,26 @@ class Collection:
         return action
 
     def prepare_mint_transaction(
-            self,
-            authorized_minter: str,
-            collection_name: str,
-            schema_name: str,
-            template_id: str,
-            new_asset_owner: str,
-            immutable_data: list = [],
-            mutable_data: list = [],
-            tokens_to_back: str = "0.00000000 WAX",
+        self,
+        authorized_minter: str,
+        collection_name: str,
+        schema_name: str,
+        template_id: str,
+        new_asset_owner: str,
+        immutable_data: list = [],
+        mutable_data: list = [],
+        tokens_to_back: str = "0.00000000 WAX",
     ):
         """
-        :param authorized_minter:
-        :param collection_name:
-        :param schema_name:
-        :param template_id:
-        :param new_asset_owner:
-        :param immutable_data:
-        :param mutable_data:
-        :param tokens_to_back:
+        :param authorized_minter: wallet with authorisation to mint collection assets
+        :param collection_name: self-explanatory
+        :param schema_name: self-explanatory
+        :param template_id: self-explanatory
+        :param new_asset_owner: the recipient wallet
+        :param immutable_data: better to leave it unfilled
+        :param mutable_data: better to leave it unfilled
+        :param tokens_to_back: amount of tokens with token symbol. Like that "0.00000000 WAX".
+                Always 8 digits after period and one space before the token symbol.
         :return: TX ID or 'False' if TX failed.
         """
         logger.info("Creating Transaction...")
@@ -177,7 +187,9 @@ class Collection:
             ),
             eospyo.Data(
                 name="immutable_data",
-                value=eospyo.types.Array(values=immutable_data, type_=eospyo.types.Array),
+                value=eospyo.types.Array(
+                    values=immutable_data, type_=eospyo.types.Array
+                ),
             ),
             eospyo.Data(
                 name="mutable_data",
@@ -214,19 +226,21 @@ class Collection:
         pass
 
     def send_or_mint_assets_to_wallet(
-            self,
-            schema_template_list: list,
-            wallet: str,
-            memo: str = "",
+        self,
+        schema_template_list: list,
+        wallet: str,
+        memo: str = "",
     ):
         """
-        :param wallet: recipient wallet
         :param schema_template_list: list of tuples containing schema names and template IDs
          e.g. [("rawmaterials", 318738), ("magmaterials", 416529)]
+        :param wallet: recipient wallet
         :param memo: transaction memo
         :return: TX ID or 'False' if TX failed.
         """
-        schemas_templates_quantities = self.collapse_identical_schemas_templates(schema_template_list)
+        schemas_templates_quantities = self.collapse_identical_schemas_templates(
+            schema_template_list
+        )
         logger.info(
             f"*** Requested to send {schemas_templates_quantities} to wallet '{wallet}'"
         )
@@ -255,13 +269,15 @@ class Collection:
                 )
                 minted_quantity = 0
                 while minted_quantity < need_to_mint:
-                    minting_tx = self.send_transaction(self.prepare_mint_transaction(
-                        self.collection_wallet,
-                        self.collection,
-                        schema,
-                        template,
-                        wallet,
-                    ))
+                    minting_tx = self.send_transaction(
+                        self.prepare_mint_transaction(
+                            self.collection_wallet,
+                            self.collection,
+                            schema,
+                            template,
+                            wallet,
+                        )
+                    )
                     if minting_tx:
                         minted_quantity += 1
                         logger.info(f"Successfully minted: {minting_tx}")
@@ -275,9 +291,11 @@ class Collection:
             logger.info(
                 f"Going to send following assets: {assets_to_send} to the wallet '{wallet}'"
             )
-            tx_return_status = self.send_transaction(self.prepare_transfer_transaction(
-                assets_to_send, wallet, self.collection_wallet, memo
-            ))
+            tx_return_status = self.send_transaction(
+                self.prepare_transfer_transaction(
+                    assets_to_send, wallet, self.collection_wallet, memo
+                )
+            )
             if tx_return_status:
                 logger.info(f"Successfully sent: {tx_return_status}")
             else:
