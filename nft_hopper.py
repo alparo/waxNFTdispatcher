@@ -300,5 +300,5 @@ class Collection:
             if tx_return_status:
                 logger.info(f"Successfully sent: {tx_return_status}")
             else:
-                logger.error(f"TX failed")
+                logger.critical(f"Failed to send assets: {assets_to_send} to the wallet '{wallet}'!")
             return tx_return_status
