@@ -26,7 +26,7 @@ class Collection:
         self.private_key = private_key
         self.entrypoint_assets = f"{api_entrypoint}/assets"
 
-    def get_available_assets(
+    def _get_available_assets(
         self,
         schema_template_list: list,
         sorting_key: str = "asset_id",
@@ -55,7 +55,7 @@ class Collection:
         return response.json()
 
     @staticmethod
-    def collapse_identical_schemas_templates(schema_template_list: list):
+    def _collapse_identical_schemas_templates(schema_template_list: list):
         """
         :param schema_template_list: list with (schema, template) tuples.
                 E.g. [("rawmaterials", 318738), ("magmaterials", 416529)]
@@ -67,7 +67,7 @@ class Collection:
         return dict_with_counted_schemas_templates.items()
 
     @staticmethod
-    def find_assets_with_highest_mints(
+    def _find_assets_with_highest_mints(
         api_response, template_id: str, quantity_requested: int = 1
     ):
         """
@@ -101,7 +101,7 @@ class Collection:
                 break
         return asset_ids, quantity_to_mint
 
-    def prepare_transfer_transaction(
+    def _prepare_transfer_transaction(
         self, asset_ids: list, to: str, from_wallet: str, memo: str = ""
     ):
         """
@@ -140,7 +140,7 @@ class Collection:
         )
         return action
 
-    def prepare_mint_transaction(
+    def _prepare_mint_transaction(
         self,
         authorized_minter: str,
         collection_name: str,
@@ -209,7 +209,7 @@ class Collection:
         )
         return action
 
-    def send_transaction(self, action):
+    def _send_transaction(self, action):
         raw_transaction = eospyo.Transaction(actions=[action])
         logger.debug("Linking transaction to the network...")
         net = eospyo.WaxTestnet()  # this is an alias for a testnet node
@@ -238,7 +238,7 @@ class Collection:
         :param memo: transaction memo
         :return: TX ID or 'False' if TX failed.
         """
-        schemas_templates_quantities = self.collapse_identical_schemas_templates(
+        schemas_templates_quantities = self._collapse_identical_schemas_templates(
             schema_template_list
         )
         logger.info(
@@ -246,7 +246,7 @@ class Collection:
         )
         # make a request to blockchain to get available assets with given template_ids
         if schema_template_list:
-            api_response = self.get_available_assets(schema_template_list)
+            api_response = self._get_available_assets(schema_template_list)
         else:
             logger.error("Schema-template list is empty")
             return
@@ -258,7 +258,7 @@ class Collection:
             logger.info(
                 f"Searching in stock for {quantity} asset(s) with template '{template}'"
             )
-            found_assets, need_to_mint = self.find_assets_with_highest_mints(
+            found_assets, need_to_mint = self._find_assets_with_highest_mints(
                 api_response, template, quantity
             )
             if found_assets:
@@ -269,8 +269,8 @@ class Collection:
                 )
                 minted_quantity = 0
                 while minted_quantity < need_to_mint:
-                    minting_tx = self.send_transaction(
-                        self.prepare_mint_transaction(
+                    minting_tx = self._send_transaction(
+                        self._prepare_mint_transaction(
                             self.collection_wallet,
                             self.collection,
                             schema,
@@ -283,7 +283,8 @@ class Collection:
                         logger.info(f"Successfully minted: {minting_tx}")
                     else:
                         logger.critical(
-                            f"Failed to mint asset with schema, template '{schema_template}'. Manual intervention is needed!"
+                            f"Failed to mint asset with schema, template '{schema_template}'. "
+                            f"Manual intervention is needed! "
                         )
                         break
 
@@ -291,8 +292,8 @@ class Collection:
             logger.info(
                 f"Going to send following assets: {assets_to_send} to the wallet '{wallet}'"
             )
-            tx_return_status = self.send_transaction(
-                self.prepare_transfer_transaction(
+            tx_return_status = self._send_transaction(
+                self._prepare_transfer_transaction(
                     assets_to_send, wallet, self.collection_wallet, memo
                 )
             )
