@@ -3,8 +3,6 @@ from loguru import logger
 import requests
 from collections import Counter
 
-logger.add("sendoutnft.log", format="{time} {level} {message}", retention="1 week")
-
 
 class AssetSender:
     def __init__(
