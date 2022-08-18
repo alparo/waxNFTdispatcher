@@ -1,8 +1,9 @@
 from nft_hopper import AssetSender
 import os
 
+# Example usage
 private_key = os.environ["PRIVATE_KEY"]
-entrypoint = "https://test.wax.api.atomicassets.io/atomicassets/v1"
+entrypoint = "https://wax.api.atomicassets.io/atomicassets/v1"
 collection_wallet = "thisismyfirs"
 collection = "cxctestnet12"
 recipient = "thisismyseco"

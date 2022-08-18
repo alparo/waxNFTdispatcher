@@ -220,7 +220,7 @@ class AssetSender:
         """
         raw_transaction = eospyo.Transaction(actions=[action])
         logger.debug("Linking transaction to the network...")
-        net = eospyo.WaxTestnet()  # this is an alias for a testnet node
+        net = eospyo.WaxMainnet()  # this is an alias for WAX mainnet node
         linked_transaction = raw_transaction.link(net=net)
         logger.debug("Signing transaction...")
         signed_transaction = linked_transaction.sign(key=self.private_key)
