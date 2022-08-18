@@ -1,3 +1,4 @@
+from typing import Iterable
 import eospyo
 from loguru import logger
 import requests
@@ -26,15 +27,15 @@ class AssetSender:
 
     def _get_available_assets(
         self,
-        schema_template_list: list,
+        schema_template_list: Iterable[tuple[str, int]],
         sorting_key: str = "asset_id",
-    ):
+    ) -> list:
         """
         Make request to blockchain to get available assets in collection wallet with given template IDs
         :param schema_template_list: list of (schema, template) tuples.
                 E.g. [("rawmaterials", 318738), ("magmaterials", 416529)]
         :param sorting_key: self-explanatory, default "asset_id"
-        :return: API response with all found assets sorted by default by the highest asset ID
+        :return: list with all found assets (with other info from API) sorted by default by the highest asset ID
         """
         # Build comma separated string of templates
         template_list_string = ",".join(
@@ -50,10 +51,12 @@ class AssetSender:
             "sort": sorting_key,
         }
         response = requests.get(self.entrypoint_assets, params=payload)
-        return response.json()
+        return response.json()["data"]
 
     @staticmethod
-    def _collapse_identical_schemas_templates(schema_template_list: list):
+    def _collapse_identical_schemas_templates(
+        schema_template_list: Iterable[tuple[str, int]]
+    ):
         """
         :param schema_template_list: list with (schema, template) tuples.
                 E.g. [("rawmaterials", 318738), ("magmaterials", 416529)]
@@ -70,7 +73,7 @@ class AssetSender:
     ):
         """
         Finds in collection wallet given quantity of assets with given template
-        :param api_response: data received from blockchain
+        :param api_response: list with found assets received from blockchain
         :param template_id: self-explanatory. Only one template ID per function run
         :param quantity_requested: how many assets with given template ID must be found
         :return: list of found asset IDs, quantity needed to mint if any.
@@ -81,14 +84,10 @@ class AssetSender:
         quantity_to_mint = 0
         while len(asset_ids) < quantity_requested:
             try:
-                if (
-                    api_response["data"][asset_number]["template"]["template_id"]
-                    == template_id
-                ):
-                    asset_ids.append(api_response["data"][asset_number]["asset_id"])
-                    logger.info(
-                        f"found asset with ID {api_response['data'][asset_number]['asset_id']}"
-                    )
+                asset_data = api_response[asset_number]
+                if asset_data["template"]["template_id"] == template_id:
+                    asset_ids.append(asset_data["asset_id"])
+                    logger.info(f'found asset with ID {asset_data["asset_id"]}')
                 asset_number += 1
             except IndexError:
                 quantity_available = len(asset_ids)
@@ -145,8 +144,8 @@ class AssetSender:
         schema_name: str,
         template_id: str,
         new_asset_owner: str,
-        immutable_data: list = [],
-        mutable_data: list = [],
+        immutable_data: list = None,
+        mutable_data: list = None,
         tokens_to_back: str = "0.00000000 WAX",
     ):
         """
@@ -161,6 +160,12 @@ class AssetSender:
                 Always 8 digits after period and one space before the token symbol.
         :return: Ready Action object.
         """
+        # workaround for passing mutable default argument
+        if immutable_data is None:
+            immutable_data = []
+        if mutable_data is None:
+            mutable_data = []
+
         logger.info("Creating Transaction...")
         data = [
             eospyo.Data(
@@ -230,7 +235,7 @@ class AssetSender:
 
     def send_or_mint_assets_to_wallet(
         self,
-        schema_template_list: list,
+        schema_template_list: Iterable[tuple[str, int]],
         wallet: str,
         memo: str = "",
     ):
