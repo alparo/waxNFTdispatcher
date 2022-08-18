@@ -6,7 +6,7 @@ from collections import Counter
 logger.add("sendoutnft.log", format="{time} {level} {message}", retention="1 week")
 
 
-class Collection:
+class AssetSender:
     def __init__(
         self,
         collection: str,
@@ -75,7 +75,7 @@ class Collection:
         :param api_response: data received from blockchain
         :param template_id: self-explanatory. Only one template ID per function run
         :param quantity_requested: how many assets with given template ID must be found
-        :return: list of found asset IDs
+        :return: list of found asset IDs, quantity needed to mint if any.
         """
         # extract asset_ids from reply data
         asset_ids = []
@@ -110,7 +110,7 @@ class Collection:
         :param to: string with recipient wallet
         :param from_wallet: collection wallet
         :param memo: optional self-explanatory parameter
-        :return: TX ID or 'False' if TX failed.
+        :return: Ready Action object.
         """
         logger.info("Creating Transaction...")
         data = [
@@ -161,7 +161,7 @@ class Collection:
         :param mutable_data: better to leave it unfilled
         :param tokens_to_back: amount of tokens with token symbol. Like that "0.00000000 WAX".
                 Always 8 digits after period and one space before the token symbol.
-        :return: TX ID or 'False' if TX failed.
+        :return: Ready Action object.
         """
         logger.info("Creating Transaction...")
         data = [
@@ -210,6 +210,11 @@ class Collection:
         return action
 
     def _send_transaction(self, action):
+        """
+        Sends transaction into blockchain.
+        :param action: Action object.
+        :return: TX ID or 'False' if TX failed.
+        """
         raw_transaction = eospyo.Transaction(actions=[action])
         logger.debug("Linking transaction to the network...")
         net = eospyo.WaxTestnet()  # this is an alias for a testnet node
@@ -300,5 +305,7 @@ class Collection:
             if tx_return_status:
                 logger.info(f"Successfully sent: {tx_return_status}")
             else:
-                logger.critical(f"Failed to send assets: {assets_to_send} to the wallet '{wallet}'!")
+                logger.critical(
+                    f"Failed to send assets: {assets_to_send} to the wallet '{wallet}'!"
+                )
             return tx_return_status
