@@ -1,4 +1,4 @@
-from typing import Iterable
+from typing import Iterable, Tuple
 import eospyo
 from loguru import logger
 import requests
@@ -27,7 +27,7 @@ class AssetSender:
 
     def _get_available_assets(
         self,
-        schema_template_list: Iterable[tuple[str, int]],
+        schema_template_list: Iterable[Tuple[str, int]],
         sorting_key: str = "asset_id",
     ) -> list:
         """
@@ -55,7 +55,7 @@ class AssetSender:
 
     @staticmethod
     def _collapse_identical_schemas_templates(
-        schema_template_list: Iterable[tuple[str, int]]
+        schema_template_list: Iterable[Tuple[str, int]]
     ):
         """
         :param schema_template_list: list with (schema, template) tuples.
@@ -235,7 +235,7 @@ class AssetSender:
 
     def send_or_mint_assets_to_wallet(
         self,
-        schema_template_list: Iterable[tuple[str, int]],
+        schema_template_list: Iterable[Tuple[str, int]],
         wallet: str,
         memo: str = "",
     ):
@@ -246,6 +246,7 @@ class AssetSender:
         :param memo: transaction memo
         :return: TX ID or 'False' if TX failed.
         """
+        successful_tx = []
         schemas_templates_quantities = self._collapse_identical_schemas_templates(
             schema_template_list
         )
@@ -288,6 +289,7 @@ class AssetSender:
                     )
                     if minting_tx:
                         minted_quantity += 1
+                        successful_tx.append(minting_tx)
                         logger.info(f"Successfully minted: {minting_tx}")
                     else:
                         logger.critical(
@@ -306,9 +308,10 @@ class AssetSender:
                 )
             )
             if tx_return_status:
+                successful_tx.append(tx_return_status)
                 logger.info(f"Successfully sent: {tx_return_status}")
             else:
                 logger.critical(
                     f"Failed to send assets: {assets_to_send} to the wallet '{wallet}'!"
                 )
-            return tx_return_status
+        return successful_tx
