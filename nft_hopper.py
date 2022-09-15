@@ -1,3 +1,4 @@
+import time
 from typing import Iterable, Tuple
 import eospyo
 from loguru import logger
@@ -297,6 +298,8 @@ class AssetSender:
                             f"Manual intervention is needed! "
                         )
                         break
+                    # Sleep in order to get rig of "duplicate transaction" error
+                    time.sleep(0.5)
 
         if assets_to_send:
             logger.info(
