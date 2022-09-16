@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "send-nft"
-version = "0.1.0"
+name = "NFT-hopper"
+version = "0.1.1"
 description = ""
 authors = ["alparo <amparo.dios@gmail.com>"]
 
