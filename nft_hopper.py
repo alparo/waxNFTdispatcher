@@ -299,7 +299,7 @@ class AssetSender:
                         )
                         break
                     # Sleep in order to get rig of "duplicate transaction" error
-                    time.sleep(0.5)
+                    time.sleep(1)
 
         if assets_to_send:
             logger.info(
