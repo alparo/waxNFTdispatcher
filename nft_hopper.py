@@ -1,6 +1,6 @@
 import time
 from typing import Iterable, Tuple
-import eospyo
+import pyntelope
 from loguru import logger
 import requests
 from collections import Counter
@@ -120,25 +120,25 @@ class AssetSender:
         """
         logger.info("Creating Transaction...")
         data = [
-            eospyo.Data(
+            pyntelope.Data(
                 name="from",
-                value=eospyo.types.Name(from_wallet),
+                value=pyntelope.types.Name(from_wallet),
             ),
-            eospyo.Data(
+            pyntelope.Data(
                 name="to",
-                value=eospyo.types.Name(to),
+                value=pyntelope.types.Name(to),
             ),
-            eospyo.Data(
+            pyntelope.Data(
                 name="asset_ids",
-                value=eospyo.types.Array(values=asset_ids, type_=eospyo.types.Uint64),
+                value=pyntelope.types.Array(values=asset_ids, type_=pyntelope.types.Uint64),
             ),
-            eospyo.Data(
+            pyntelope.Data(
                 name="memo",
-                value=eospyo.types.String(memo),
+                value=pyntelope.types.String(memo),
             ),
         ]
-        auth = eospyo.Authorization(actor=self.collection_wallet, permission="active")
-        action = eospyo.Action(
+        auth = pyntelope.Authorization(actor=self.collection_wallet, permission="active")
+        action = pyntelope.Action(
             account="atomicassets",  # this is the contract account
             name="transfer",  # this is the action name
             data=data,
@@ -177,43 +177,43 @@ class AssetSender:
 
         logger.info("Creating Transaction...")
         data = [
-            eospyo.Data(
+            pyntelope.Data(
                 name="authorized_minter",
-                value=eospyo.types.Name(authorized_minter),
+                value=pyntelope.types.Name(authorized_minter),
             ),
-            eospyo.Data(
+            pyntelope.Data(
                 name="collection_name",
-                value=eospyo.types.Name(collection_name),
+                value=pyntelope.types.Name(collection_name),
             ),
-            eospyo.Data(
+            pyntelope.Data(
                 name="schema_name",
-                value=eospyo.types.Name(schema_name),
+                value=pyntelope.types.Name(schema_name),
             ),
-            eospyo.Data(
+            pyntelope.Data(
                 name="template_id",
-                value=eospyo.types.Uint32(template_id),
+                value=pyntelope.types.Uint32(template_id),
             ),
-            eospyo.Data(
+            pyntelope.Data(
                 name="new_asset_owner",
-                value=eospyo.types.Name(new_asset_owner),
+                value=pyntelope.types.Name(new_asset_owner),
             ),
-            eospyo.Data(
+            pyntelope.Data(
                 name="immutable_data",
-                value=eospyo.types.Array(
-                    values=immutable_data, type_=eospyo.types.Array
+                value=pyntelope.types.Array(
+                    values=immutable_data, type_=pyntelope.types.Array
                 ),
             ),
-            eospyo.Data(
+            pyntelope.Data(
                 name="mutable_data",
-                value=eospyo.types.Array(values=mutable_data, type_=eospyo.types.Array),
+                value=pyntelope.types.Array(values=mutable_data, type_=pyntelope.types.Array),
             ),
-            eospyo.Data(
+            pyntelope.Data(
                 name="tokens_to_back",
-                value=eospyo.types.Asset(tokens_to_back),
+                value=pyntelope.types.Asset(tokens_to_back),
             ),
         ]
-        auth = eospyo.Authorization(actor=self.collection_wallet, permission="active")
-        action = eospyo.Action(
+        auth = pyntelope.Authorization(actor=self.collection_wallet, permission="active")
+        action = pyntelope.Action(
             account="atomicassets",     # this is the contract account
             name="mintasset",           # this is the action name
             data=data,
@@ -227,12 +227,12 @@ class AssetSender:
         :param action: Action object.
         :return: TX ID or 'False' if TX failed.
         """
-        raw_transaction = eospyo.Transaction(actions=[action])
+        raw_transaction = pyntelope.Transaction(actions=[action])
         logger.debug("Linking transaction to the network...")
         if self.testnet:
-            net = eospyo.WaxTestnet()  # this is an alias for WAX testnet node
+            net = pyntelope.WaxTestnet()  # this is an alias for WAX testnet node
         else:
-            net = eospyo.WaxMainnet()  # this is an alias for WAX mainnet node
+            net = pyntelope.WaxMainnet()  # this is an alias for WAX mainnet node
         linked_transaction = raw_transaction.link(net=net)
         logger.debug("Signing transaction...")
         signed_transaction = linked_transaction.sign(key=self.private_key)
