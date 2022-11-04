@@ -12,19 +12,27 @@ class AssetSender:
         collection: str,
         collection_wallet: str,
         private_key: str,
-        api_entrypoint: str,
+        api_endpoint: str = '',
+        testnet: bool = False,
     ):
         """
         Constructor
         :param collection: Collection which assets are going to be transferred or minted
         :param collection_wallet: wallet which holds the assets
         :param private_key: private key from the collection_wallet
-        :param api_entrypoint: API URL address
+        :param api_endpoint: API URL address
+        :param testnet: if True, will interact with Wax Test Net through Test endpoint.
         """
         self.collection = collection
         self.collection_wallet = collection_wallet
         self.private_key = private_key
-        self.entrypoint_assets = f"{api_entrypoint}/assets"
+        self.testnet = testnet
+        # Set the default API endpoint
+        if self.testnet and not api_endpoint:
+            api_endpoint = "https://test.wax.api.atomicassets.io/atomicassets/v1"
+        elif not self.testnet and not api_endpoint:
+            api_endpoint = "https://wax.api.atomicassets.io/atomicassets/v1"
+        self.endpoint_assets = f"{api_endpoint}/assets"
 
     def _get_available_assets(
         self,
@@ -33,7 +41,7 @@ class AssetSender:
     ) -> list:
         """
         Make request to blockchain to get available assets in collection wallet with given template IDs
-        :param schema_template_list: list of (schema, template) tuples.
+        :param schema_template_list: list or tuple of (schema, template) tuples.
                 E.g. [("rawmaterials", 318738), ("magmaterials", 416529)]
         :param sorting_key: self-explanatory, default "asset_id"
         :return: list with all found assets (with other info from API) sorted by default by the highest asset ID
@@ -51,7 +59,7 @@ class AssetSender:
             "template_whitelist": template_list_string,
             "sort": sorting_key,
         }
-        response = requests.get(self.entrypoint_assets, params=payload)
+        response = requests.get(self.endpoint_assets, params=payload)
         return response.json()["data"]
 
     @staticmethod
@@ -206,8 +214,8 @@ class AssetSender:
         ]
         auth = eospyo.Authorization(actor=self.collection_wallet, permission="active")
         action = eospyo.Action(
-            account="atomicassets",  # this is the contract account
-            name="mintasset",  # this is the action name
+            account="atomicassets",     # this is the contract account
+            name="mintasset",           # this is the action name
             data=data,
             authorization=[auth],
         )
@@ -221,7 +229,10 @@ class AssetSender:
         """
         raw_transaction = eospyo.Transaction(actions=[action])
         logger.debug("Linking transaction to the network...")
-        net = eospyo.WaxMainnet()  # this is an alias for WAX mainnet node
+        if self.testnet:
+            net = eospyo.WaxTestnet()  # this is an alias for WAX testnet node
+        else:
+            net = eospyo.WaxMainnet()  # this is an alias for WAX mainnet node
         linked_transaction = raw_transaction.link(net=net)
         logger.debug("Signing transaction...")
         signed_transaction = linked_transaction.sign(key=self.private_key)
@@ -232,7 +243,6 @@ class AssetSender:
         except KeyError:
             logger.error(resp["error"]["details"][0]["message"])
             return False
-        pass
 
     def send_or_mint_assets_to_wallet(
         self,
@@ -247,21 +257,24 @@ class AssetSender:
         :param memo: transaction memo
         :return: TX ID or 'False' if TX failed.
         """
-        successful_tx = []
+        if not schema_template_list:
+            logger.error("Schema-template list is empty!")
+            raise ValueError("Schema-template can't be empty!")
+        if not wallet:
+            logger.error("Wallet is empty!")
+            raise ValueError("The wallet can't be empty!")
+
         schemas_templates_quantities = self._collapse_identical_schemas_templates(
             schema_template_list
         )
         logger.info(
-            f"*** Requested to send {schemas_templates_quantities} to wallet '{wallet}'"
+            f"*** Requested to send {schemas_templates_quantities} to the wallet '{wallet}'"
         )
-        # make a request to blockchain to get available assets with given template_ids
-        if schema_template_list:
-            api_response = self._get_available_assets(schema_template_list)
-        else:
-            logger.error("Schema-template list is empty")
-            return
+        # Make a request to blockchain to get available assets with given template_ids
+        api_response = self._get_available_assets(schema_template_list)
 
         assets_to_send = []
+        successful_tx = []
         for schema_template, quantity in schemas_templates_quantities:
             schema = schema_template[0]
             template = str(schema_template[1])
@@ -299,7 +312,7 @@ class AssetSender:
                         )
                         break
                     # Sleep in order to get rig of "duplicate transaction" error
-                    time.sleep(1)
+                    #time.sleep(1)
 
         if assets_to_send:
             logger.info(
