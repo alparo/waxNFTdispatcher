@@ -5,6 +5,10 @@ from loguru import logger
 import requests
 from collections import Counter
 
+ATOMICASSETS_MAIN_API = "https://wax.api.atomicassets.io/atomicassets/v1"
+ATOMICASSETS_TEST_API = "https://test.wax.api.atomicassets.io/atomicassets/v1"
+TIMEOUT = 0
+
 
 class AssetSender:
     def __init__(
@@ -29,9 +33,9 @@ class AssetSender:
         self.testnet = testnet
         # Set the default API endpoint
         if self.testnet and not api_endpoint:
-            api_endpoint = "https://test.wax.api.atomicassets.io/atomicassets/v1"
+            api_endpoint = ATOMICASSETS_TEST_API
         elif not self.testnet and not api_endpoint:
-            api_endpoint = "https://wax.api.atomicassets.io/atomicassets/v1"
+            api_endpoint = ATOMICASSETS_MAIN_API
         self.endpoint_assets = f"{api_endpoint}/assets"
 
     def _get_available_assets(
@@ -312,7 +316,7 @@ class AssetSender:
                         )
                         break
                     # Sleep in order to get rig of "duplicate transaction" error
-                    #time.sleep(1)
+                    time.sleep(TIMEOUT)
 
         if assets_to_send:
             logger.info(
