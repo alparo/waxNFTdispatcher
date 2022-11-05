@@ -335,3 +335,19 @@ class AssetSender:
                     f"Failed to send assets: {assets_to_send} to the wallet '{wallet}'!"
                 )
         return successful_tx
+
+    def send_assets_to_wallet(
+        self,
+        asset_id: Iterable[str],
+        wallet: str,
+        memo: str = "",
+    ):
+        pass
+
+    def mint_assets_to_wallet(
+        self,
+        schema_template_list: Iterable[Tuple[str, int]],
+        wallet: str,
+        memo: str = "",
+    ):
+        pass
