@@ -1,19 +1,19 @@
-# waxNFTDispatcher
+# waxNFTdispatcher
 
 This library will help you to transfer or to mint NFTs in the WAX blockchain. The library relies on the library 
 pyntelope from FACINGS and on the module loguru for beautiful logs.
 
 
 ## Installation
-```poetry add waxNFTDispatcher```
+```poetry add waxNFTdispatcher```
 
 or
 
-```pip install waxNFTDispatcher```
+```pip install waxNFTdispatcher```
 
 ## Usage
 ```python
-from waxNFTDispatcher import AssetSender
+from waxNFTdispatcher import AssetSender
 import os
 
 private_key = os.environ["PRIVATE_KEY"]
@@ -28,4 +28,4 @@ assetsender.send_or_mint_assets_to_wallet(INPUT, recipient)
 ```
 
 ## Contribution
-Contribution is highly welcome. Please send your pull requests or create issues with found bugs or suggestions.
+Contribution is highly welcome. Please send your pull requests or create issues with found bugs and suggestions.

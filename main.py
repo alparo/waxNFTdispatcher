@@ -1,4 +1,4 @@
-from nft_hopper import AssetSender
+from waxNFTdispatcher import AssetSender
 import os
 
 # Example usage
