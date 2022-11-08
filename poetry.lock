@@ -147,7 +147,7 @@ email = ["email-validator (>=1.0.3)"]
 
 [[package]]
 name = "pyntelope"
-version = "0.7.0"
+version = "0.7.1"
 description = "Interact with Antelope blockchains"
 category = "main"
 optional = false
@@ -348,8 +348,8 @@ pydantic = [
     {file = "pydantic-1.10.2.tar.gz", hash = "sha256:91b8e218852ef6007c2b98cd861601c6a09f1aa32bbbb74fab5b1c33d4a1e410"},
 ]
 pyntelope = [
-    {file = "pyntelope-0.7.0-py3-none-any.whl", hash = "sha256:b1c11e2200527a59dd8a384695b0b68458408dbd984d01b31b761692828870cb"},
-    {file = "pyntelope-0.7.0.tar.gz", hash = "sha256:6dbe1e732d67d853588bfd1bc22c3e34dc689c4fd7c8b9b95f27a566bed6db72"},
+    {file = "pyntelope-0.7.1-py3-none-any.whl", hash = "sha256:f106a91763606e9e006a5b8303b85cbfefc76614b2d6bdf2b23761c05fd2b0e9"},
+    {file = "pyntelope-0.7.1.tar.gz", hash = "sha256:bacf73466055f9825edb5ae1041a0ed86b61e4a55c879504e3d4106629b61644"},
 ]
 requests = [
     {file = "requests-2.28.1-py3-none-any.whl", hash = "sha256:8fefa2a1a1365bf5520aac41836fbee479da67864514bdb821f31ce07ce65349"},
