@@ -5,10 +5,12 @@ from loguru import logger
 import requests
 from collections import Counter
 
+from pyntelope import exc
+
 ATOMICASSETS_MAIN_API = "https://wax.api.atomicassets.io/atomicassets/v1"
 ATOMICASSETS_TEST_API = "https://test.wax.api.atomicassets.io/atomicassets/v1"
-TIMEOUT = 0
-RETRIES = 3
+TIMEOUT = 3
+RETRIES = 2
 
 
 class AssetSender:
@@ -83,7 +85,7 @@ class AssetSender:
 
     @staticmethod
     def _find_assets_with_highest_mints(
-        api_response, template_id: str, quantity_requested: int = 1
+        api_response, template_id: int, quantity_requested: int = 1
     ):
         """
         Finds in collection wallet given quantity of assets with given template
@@ -99,7 +101,7 @@ class AssetSender:
         while len(asset_ids) < quantity_requested:
             try:
                 asset_data = api_response[asset_number]
-                if asset_data["template"]["template_id"] == template_id:
+                if int(asset_data["template"]["template_id"]) == template_id:
                     asset_ids.append(asset_data["asset_id"])
                     logger.info(f'found asset with ID {asset_data["asset_id"]}')
                 asset_number += 1
@@ -123,7 +125,7 @@ class AssetSender:
         :param memo: optional self-explanatory parameter
         :return: Ready Action object.
         """
-        logger.info("Creating Transaction...")
+        logger.info("Creating transfer transaction...")
         data = [
             pyntelope.Data(
                 name="from",
@@ -160,7 +162,7 @@ class AssetSender:
         authorized_minter: str,
         collection_name: str,
         schema_name: str,
-        template_id: str,
+        template_id: int,
         new_asset_owner: str,
         immutable_data: list = None,
         mutable_data: list = None,
@@ -184,7 +186,7 @@ class AssetSender:
         if mutable_data is None:
             mutable_data = []
 
-        logger.info("Creating Transaction...")
+        logger.info("Creating mint transaction...")
         data = [
             pyntelope.Data(
                 name="authorized_minter",
@@ -234,7 +236,7 @@ class AssetSender:
         )
         return action
 
-    def _send_transaction(self, action):
+    def _send_transaction(self, action) -> str:
         """
         Sends transaction into blockchain.
         :param action: Action object.
@@ -259,12 +261,12 @@ class AssetSender:
             logger.error(error_message)
             raise ValueError(error_message)
 
-    def send_or_mint_assets_to_wallet(
+    def send_or_mint_assets(
         self,
         schema_template_list: Iterable[Tuple[str, int]],
         wallet: str,
         memo: str = "",
-    ):
+    ) -> list:
         """
         :param schema_template_list: list or tuple of tuples containing schema names and template IDs
          e.g. [("rawmaterials", 318738), ("magmaterials", 416529)]
@@ -278,6 +280,9 @@ class AssetSender:
         if not wallet:
             logger.error("Wallet is empty!")
             raise ValueError("The wallet can't be empty!")
+        if wallet == self.collection_wallet:
+            logger.error("Can't transfer assets to yourself!")
+            raise ValueError("Can't transfer assets to yourself!")
 
         schemas_templates_quantities = self._collapse_identical_schemas_templates(
             schema_template_list
@@ -292,7 +297,7 @@ class AssetSender:
         successful_tx = []
         for schema_template, quantity in schemas_templates_quantities:
             schema = schema_template[0]
-            template = str(schema_template[1])
+            template = schema_template[1]
             logger.info(
                 f"Searching in stock for {quantity} asset(s) with template '{template}'"
             )
@@ -302,17 +307,15 @@ class AssetSender:
             if found_assets:
                 assets_to_send.extend(found_assets)
             if need_to_mint > 0:
-                successful_tx.append(
-                    self.mint_assets_to_wallet(schema, template, wallet, need_to_mint)
+                successful_tx += self.mint_assets(
+                    schema, template, wallet, need_to_mint
                 )
 
         if assets_to_send:
-            successful_tx.append(
-                self.send_assets_to_wallet(assets_to_send, wallet, memo)
-            )
+            successful_tx.append(self.send_assets(assets_to_send, wallet, memo))
         return successful_tx
 
-    def send_assets_to_wallet(
+    def send_assets(
         self,
         assets_to_send: any,
         wallet: str,
@@ -341,38 +344,52 @@ class AssetSender:
                 f"Failed to send assets: {assets_to_send} to the wallet '{wallet}'!"
             )
 
-    def mint_assets_to_wallet(
+    def mint_assets(
         self,
         schema: str,
-        template: str,
+        template: int,
         wallet: str,
         quantity: int = 1,
-    ):
+    ) -> list:
         logger.info(
-            f"Going to mint {quantity} assets with template '{template}' to the wallet '{wallet}'"
+            f"Going to mint {quantity} assets with template '{template}', schema '{schema}' to the wallet '{wallet}'"
         )
         minted_quantity = 0
         txs = []
-        while minted_quantity < quantity:
-            minting_tx = self._send_transaction(
-                self._prepare_mint_transaction(
-                    self.collection_wallet,
-                    self.collection,
-                    schema,
-                    template,
-                    wallet,
+        retry = 0
+        wait_time = TIMEOUT
+        while minted_quantity < quantity and retry <= RETRIES:
+            try:
+                minting_tx = self._send_transaction(
+                    self._prepare_mint_transaction(
+                        self.collection_wallet,
+                        self.collection,
+                        schema,
+                        template,
+                        wallet,
+                    )
                 )
-            )
+            except exc.ConnectionError:
+                logger.error(
+                    f"Couldn't mint '{schema}, {template}'. Will retry in {wait_time} seconds..."
+                )
+                # Sleep in order to get rid of "duplicate transaction" error
+                time.sleep(wait_time)
+                wait_time *= 2
+                retry += 1
+                continue
             if minting_tx:
-                minted_quantity += 1
-                txs.append(minting_tx)
                 logger.info(f"Successfully minted: {minting_tx}")
+                minted_quantity += 1
+                retry = 0
+                wait_time = TIMEOUT
+                txs.append(minting_tx)
             else:
                 logger.critical(
                     f"Failed to mint asset with schema '{schema}' and template '{template}'. "
-                    f"Manual intervention is needed! "
+                    f"Manual intervention is needed!"
                 )
-                break
-            # Sleep in order to get rig of "duplicate transaction" error
-            time.sleep(TIMEOUT)
+                raise RuntimeError(
+                    f"Failed to mint asset with schema '{schema}' and template '{template}'!"
+                )
         return txs
