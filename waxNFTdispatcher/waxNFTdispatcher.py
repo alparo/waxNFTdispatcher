@@ -118,7 +118,7 @@ class AssetSender:
         self, asset_ids: any, to: str, from_wallet: str, memo: str = ""
     ):
         """
-        Sends given assets from SENDER wallet to given recipient wallet
+        Sends given assets from the collection wallet to given recipient wallet
         :param asset_ids: can be list, tuple, int or str
         :param to: string with recipient wallet
         :param from_wallet: collection wallet
@@ -240,7 +240,7 @@ class AssetSender:
         """
         Sends transaction into blockchain.
         :param action: Action object.
-        :return: TX ID or 'False' if TX failed.
+        :return: TX ID or raise ValueError exception if TX failed.
         """
         raw_transaction = pyntelope.Transaction(actions=[action])
         logger.debug("Linking transaction to the network...")
@@ -351,6 +351,15 @@ class AssetSender:
         wallet: str,
         quantity: int = 1,
     ) -> list:
+        """
+        Mints given number of assets with given schema and template. If gets 'duplicate transaction' error will wait
+        fot TIMEOUT seconds and do RETRIES attempts of retries.
+        :param schema: self-explanatory
+        :param template: self-explanatory
+        :param wallet: recipient wallet
+        :param quantity: how many assets of the same template needs to be minted
+        :return: hashes of successful transactions or raise RuntimeError exception
+        """
         logger.info(
             f"Going to mint {quantity} assets with template '{template}', schema '{schema}' to the wallet '{wallet}'"
         )

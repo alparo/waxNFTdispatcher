@@ -14,7 +14,7 @@ or
 ## Usage
 
 ```python
-from waxNFTdispatcher.waxNFTdispatcher import AssetSender
+from waxNFTdispatcher import AssetSender
 import os
 
 private_key = os.environ["PRIVATE_KEY"]
@@ -33,7 +33,7 @@ assetsender.send_or_mint_assets(INPUT, recipient)
 # Send assets with given asset ID to the given wallet
 assetsender.send_assets(("1099543811405", "1099543811406"), recipient)
 
-# Mint given number of assets
+# Mint given number of same assets
 assetsender.mint_assets("rawmaterials", 318738, "recipient.wam", 5)
 ```
 
