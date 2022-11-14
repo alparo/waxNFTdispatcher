@@ -387,12 +387,14 @@ class AssetSender:
                 wait_time *= 2
                 retry += 1
                 continue
-            if minting_tx:
+            if minting_tx and minting_tx not in txs:
                 logger.info(f"Successfully minted: {minting_tx}")
                 minted_quantity += 1
                 retry = 0
                 wait_time = TIMEOUT
                 txs.append(minting_tx)
+                # Sleep in order to get rid of "duplicate transaction" error
+                time.sleep(2)
             else:
                 logger.critical(
                     f"Failed to mint asset with schema '{schema}' and template '{template}'. "

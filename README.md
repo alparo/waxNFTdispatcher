@@ -1,6 +1,6 @@
 # waxNFTdispatcher
 
-This library will help you to transfer or to mint NFTs in the WAX blockchain. It relies on the library 
+This library will help you to transfer or to mint NFTs on the WAX blockchain. It relies on the library 
 pyntelope for blockchain interaction and on the library loguru for beautiful logs.
 
 
