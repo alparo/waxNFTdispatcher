@@ -259,7 +259,6 @@ class AssetSender:
             print(resp)
             error_message = resp["error"]["details"][0]["message"]
             logger.error(error_message)
-            raise ValueError(error_message)
 
     def send_or_mint_assets(
         self,
@@ -320,13 +319,13 @@ class AssetSender:
         assets_to_send: any,
         wallet: str,
         memo: str = "",
-    ) -> str:
+    ) -> tuple:
         """
         Sends assets with given IDs to the provided wallet with provided memo.
         :param assets_to_send: can be list, tuple, int or str. E.g. ('1099788246105', 1099788246106)
         :param wallet: blockchain wallet
         :param memo: optional field for memo of the transaction
-        :return: hash of successful transaction
+        :return: tuple of list with asset IDs + hash of successful transaction or False
         """
         logger.info(
             f"Going to send following assets: {assets_to_send} to the wallet '{wallet}'"
@@ -338,11 +337,12 @@ class AssetSender:
         )
         if tx_return_status:
             logger.info(f"Successfully sent: {tx_return_status}")
-            return tx_return_status
+            return assets_to_send, tx_return_status
         else:
             logger.critical(
                 f"Failed to send assets: {assets_to_send} to the wallet '{wallet}'!"
             )
+            return assets_to_send, False
 
     def mint_assets(
         self,
@@ -358,7 +358,7 @@ class AssetSender:
         :param template: self-explanatory
         :param wallet: recipient wallet
         :param quantity: how many assets of the same template needs to be minted
-        :return: hashes of successful transactions or raise RuntimeError exception
+        :return: list of schema-template tuples + hashes of successful transactions or False
         """
         logger.info(
             f"Going to mint {quantity} assets with template '{template}', schema '{schema}' to the wallet '{wallet}'"
@@ -367,7 +367,7 @@ class AssetSender:
         txs = []
         retry = 0
         wait_time = TIMEOUT
-        while minted_quantity < quantity and retry <= RETRIES:
+        while minted_quantity < quantity:
             try:
                 minting_tx = self._send_transaction(
                     self._prepare_mint_transaction(
@@ -386,21 +386,26 @@ class AssetSender:
                 time.sleep(wait_time)
                 wait_time *= 2
                 retry += 1
-                continue
+                if retry <= RETRIES:
+                    continue
+                logger.error(f"Reached {retry} retries. Giving up...")
+                minting_tx = False
             if minting_tx and minting_tx not in txs:
                 logger.info(f"Successfully minted: {minting_tx}")
                 minted_quantity += 1
                 retry = 0
                 wait_time = TIMEOUT
-                txs.append(minting_tx)
+                txs.append(((schema, template), minting_tx))
                 # Sleep in order to get rid of "duplicate transaction" error
                 time.sleep(2)
-            else:
-                logger.critical(
-                    f"Failed to mint asset with schema '{schema}' and template '{template}'. "
-                    f"Manual intervention is needed!"
-                )
-                raise RuntimeError(
+            elif not minting_tx:
+                logger.error(
                     f"Failed to mint asset with schema '{schema}' and template '{template}'!"
                 )
+                minted_quantity += 1
+                retry = 0
+                wait_time = TIMEOUT
+                txs.append(((schema, template), False))
+                # Sleep in order to get rid of "duplicate transaction" error
+                time.sleep(2)
         return txs

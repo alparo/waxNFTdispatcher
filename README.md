@@ -37,6 +37,14 @@ assetsender.send_assets(("1099543811405", "1099543811406"), recipient)
 assetsender.mint_assets("rawmaterials", 318738, "recipient.wam", 5)
 ```
 
+The methods return tuple or list of tuples where on the first place is the asset ID or schema-template tuple, an on the
+second place either hash of successful transaction or False if transaction failed for some reason. For example:
+
+```
+[(('rawmaterials', 318738), False),
+(['1099511811819'], '6b80b145aa261736941583ed17802a8be0254cd21a78b6bb415c923ec64ad32c')]
+```
+
 ## Contribution
 Contribution is highly welcome. Please send your pull requests or create issues with found bugs and suggestions. 
 In your pull requests please use Black formatting.
