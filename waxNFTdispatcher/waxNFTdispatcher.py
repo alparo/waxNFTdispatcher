@@ -7,8 +7,8 @@ from collections import Counter
 
 from pyntelope import exc
 
-ATOMICASSETS_MAIN_API = "https://wax.api.atomicassets.io/atomicassets/v1"
-ATOMICASSETS_TEST_API = "https://test.wax.api.atomicassets.io/atomicassets/v1"
+ATOMICASSETS_MAIN_API = "https://wax.eosusa.io/atomicassets/v1"
+ATOMICASSETS_TEST_API = "https://test.wax.eosusa.io/atomicassets/v1"
 TIMEOUT = 3
 RETRIES = 2
 
