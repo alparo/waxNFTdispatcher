@@ -317,13 +317,13 @@ class AssetSender:
 
     def send_assets(
             self,
-            assets_to_send: any,
+            assets_to_send: Iterable[any],
             wallet: str,
             memo: str = "",
     ) -> tuple:
         """
         Sends assets with given IDs to the provided wallet with provided memo.
-        :param assets_to_send: can be list, tuple, int or str. E.g. ('1099788246105', 1099788246106)
+        :param assets_to_send: must be an iterable type. E.g. ('1099788246105', )
         :param wallet: blockchain wallet
         :param memo: optional field for memo of the transaction
         :return: tuple of list with asset IDs + hash of successful transaction or False
