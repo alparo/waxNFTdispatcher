@@ -43,19 +43,19 @@ class AssetSender:
 
     def _get_available_assets(
         self,
-        schema_template_list: Iterable[Tuple[str, int]],
+        schema_template_list: Iterable[Tuple[str, str]],
         sorting_key: str = "asset_id",
     ) -> list:
         """
         Make request to blockchain to get available assets in collection wallet with given template IDs
         :param schema_template_list: list or tuple of (schema, template) tuples.
-                E.g. [("rawmaterials", 318738), ("magmaterials", 416529)]
+                E.g. [("rawmaterials", "318738"), ("magmaterials", "416529")]
         :param sorting_key: self-explanatory, default "asset_id"
         :return: list with all found assets (with other info from API) sorted by default by the highest asset ID
         """
         # Build comma separated string of templates
         template_list_string = ",".join(
-            str(template[1]) for template in schema_template_list
+            template[1] for template in schema_template_list
         )
         logger.info(
             f"Making request to blockchain to find in the collection wallet "
@@ -71,13 +71,13 @@ class AssetSender:
 
     @staticmethod
     def _collapse_identical_schemas_templates(
-        schema_template_list: Iterable[Tuple[str, int]]
+        schema_template_list: Iterable[Tuple[str, str]]
     ):
         """
         :param schema_template_list: list with (schema, template) tuples.
-                E.g. [("rawmaterials", 318738), ("magmaterials", 416529)]
+                E.g. [("rawmaterials", "318738"), ("magmaterials", "416529")]
         :return: class dict_items (list of tuples) with schemas-templates and their quantities.
-                 E.g. dict_items([(("rawmaterials", 318738), 2), (("magmaterials", 416529), 1)])
+                 E.g. dict_items([(("rawmaterials", "318738"), 2), (("magmaterials", "416529"), 1)])
         """
         # Count duplicates of tuples with schema and template and create dictionary
         dict_with_counted_schemas_templates = Counter(schema_template_list)
@@ -85,7 +85,7 @@ class AssetSender:
 
     @staticmethod
     def _find_assets_with_highest_mints(
-        api_response, template_id: int, quantity_requested: int = 1
+        api_response, template_id: str, quantity_requested: int = 1
     ):
         """
         Finds in collection wallet given quantity of assets with given template
@@ -101,7 +101,7 @@ class AssetSender:
         while len(asset_ids) < quantity_requested:
             try:
                 asset_data = api_response[asset_number]
-                if int(asset_data["template"]["template_id"]) == template_id:
+                if asset_data["template"]["template_id"] == template_id:
                     asset_ids.append(asset_data["asset_id"])
                     logger.info(f'found asset with ID {asset_data["asset_id"]}')
                 asset_number += 1
@@ -162,7 +162,7 @@ class AssetSender:
         authorized_minter: str,
         collection_name: str,
         schema_name: str,
-        template_id: int,
+        template_id: str,
         new_asset_owner: str,
         immutable_data: list = None,
         mutable_data: list = None,
@@ -262,16 +262,16 @@ class AssetSender:
 
     def send_or_mint_assets(
         self,
-        schema_template_list: Iterable[Tuple[str, int]],
+        schema_template_list: Iterable[Tuple[str, str]],
         wallet: str,
         memo: str = "",
     ) -> list:
         """
         :param schema_template_list: list or tuple of tuples containing schema names and template IDs
-         e.g. [("rawmaterials", 318738), ("magmaterials", 416529)]
+         e.g. [("rawmaterials", "318738"), ("magmaterials", "416529")]
         :param wallet: recipient wallet
         :param memo: transaction memo
-        :return: TX ID or raise exception if TX failed.
+        :return: tuple of list with asset IDs / schema-template tuples + hash of successful transaction or False
         """
         if not schema_template_list:
             logger.error("Schema-template list is empty!")
@@ -347,7 +347,7 @@ class AssetSender:
     def mint_assets(
         self,
         schema: str,
-        template: int,
+        template: str,
         wallet: str,
         quantity: int = 1,
     ) -> list:
