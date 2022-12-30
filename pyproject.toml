@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "waxNFTdispatcher"
-version = "0.2.3"
+version = "0.2.4"
 description = "This library will help you to transfer or to mint NFTs on the WAX blockchain"
 authors = ["Amparo Dios <amparo.dios@gmail.com>"]
 readme = "README.md"
@@ -12,7 +12,7 @@ repository = "https://github.com/alparo/waxNFTdispatcher"
 python = ">=3.8.0,<4.0"
 loguru = "^0.6.0"
 requests = "^2.28.1"
-pyntelope = "^0.7.0"
+pyntelope = "^0.8.0"
 
 [tool.poetry.dev-dependencies]
 

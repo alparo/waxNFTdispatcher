@@ -15,12 +15,12 @@ RETRIES = 2
 
 class AssetSender:
     def __init__(
-        self,
-        collection: str,
-        collection_wallet: str,
-        private_key: str,
-        api_endpoint: str = "",
-        testnet: bool = False,
+            self,
+            collection: str,
+            collection_wallet: str,
+            private_key: str,
+            api_endpoint: str = "",
+            testnet: bool = False,
     ):
         """
         Constructor
@@ -42,9 +42,9 @@ class AssetSender:
         self.endpoint_assets = f"{api_endpoint}/assets"
 
     def _get_available_assets(
-        self,
-        schema_template_list: Iterable[Tuple[str, str]],
-        sorting_key: str = "asset_id",
+            self,
+            schema_template_list: Iterable[Tuple[str, str]],
+            sorting_key: str = "asset_id",
     ) -> list:
         """
         Make request to blockchain to get available assets in collection wallet with given template IDs
@@ -71,7 +71,7 @@ class AssetSender:
 
     @staticmethod
     def _collapse_identical_schemas_templates(
-        schema_template_list: Iterable[Tuple[str, str]]
+            schema_template_list: Iterable[Tuple[str, str]]
     ):
         """
         :param schema_template_list: list with (schema, template) tuples.
@@ -85,7 +85,7 @@ class AssetSender:
 
     @staticmethod
     def _find_assets_with_highest_mints(
-        api_response, template_id: str, quantity_requested: int = 1
+            api_response, template_id: str, quantity_requested: int = 1
     ):
         """
         Finds in collection wallet given quantity of assets with given template
@@ -115,7 +115,7 @@ class AssetSender:
         return asset_ids, quantity_to_mint
 
     def _prepare_transfer_transaction(
-        self, asset_ids: any, to: str, from_wallet: str, memo: str = ""
+            self, asset_ids: any, to: str, from_wallet: str, memo: str = ""
     ):
         """
         Sends given assets from the collection wallet to given recipient wallet
@@ -126,6 +126,9 @@ class AssetSender:
         :return: Ready Action object.
         """
         logger.info("Creating transfer transaction...")
+        asset_ids_blk = pyntelope.types.Array.from_dict(
+            asset_ids, type_=pyntelope.types.Uint64
+        )
         data = [
             pyntelope.Data(
                 name="from",
@@ -137,9 +140,7 @@ class AssetSender:
             ),
             pyntelope.Data(
                 name="asset_ids",
-                value=pyntelope.types.Array(
-                    values=asset_ids, type_=pyntelope.types.Uint64
-                ),
+                value=asset_ids_blk
             ),
             pyntelope.Data(
                 name="memo",
@@ -158,15 +159,15 @@ class AssetSender:
         return action
 
     def _prepare_mint_transaction(
-        self,
-        authorized_minter: str,
-        collection_name: str,
-        schema_name: str,
-        template_id: str,
-        new_asset_owner: str,
-        immutable_data: list = None,
-        mutable_data: list = None,
-        tokens_to_back: str = "0.00000000 WAX",
+            self,
+            authorized_minter: str,
+            collection_name: str,
+            schema_name: str,
+            template_id: str,
+            new_asset_owner: str,
+            immutable_data: list = None,
+            mutable_data: list = None,
+            tokens_to_back: str = "0.00000000 WAX",
     ):
         """
         :param authorized_minter: wallet with authorisation to mint collection assets
@@ -261,10 +262,10 @@ class AssetSender:
             logger.error(error_message)
 
     def send_or_mint_assets(
-        self,
-        schema_template_list: Iterable[Tuple[str, str]],
-        wallet: str,
-        memo: str = "",
+            self,
+            schema_template_list: Iterable[Tuple[str, str]],
+            wallet: str,
+            memo: str = "",
     ) -> list:
         """
         :param schema_template_list: list or tuple of tuples containing schema names and template IDs
@@ -315,10 +316,10 @@ class AssetSender:
         return successful_tx
 
     def send_assets(
-        self,
-        assets_to_send: any,
-        wallet: str,
-        memo: str = "",
+            self,
+            assets_to_send: any,
+            wallet: str,
+            memo: str = "",
     ) -> tuple:
         """
         Sends assets with given IDs to the provided wallet with provided memo.
@@ -345,11 +346,11 @@ class AssetSender:
             return assets_to_send, False
 
     def mint_assets(
-        self,
-        schema: str,
-        template: str,
-        wallet: str,
-        quantity: int = 1,
+            self,
+            schema: str,
+            template: str,
+            wallet: str,
+            quantity: int = 1,
     ) -> list:
         """
         Mints given number of assets with given schema and template. If gets 'duplicate transaction' error will wait
