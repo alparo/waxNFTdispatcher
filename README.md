@@ -21,7 +21,7 @@ private_key = os.environ["PRIVATE_KEY"]
 collection_wallet = "mywallet.wam"
 collection = "pixeltycoons"
 recipient = "recipient.wam"
-INPUT = (("rawmaterials", 318738), ("magmaterials", 416529))
+INPUT = (("rawmaterials", "318738"), ("magmaterials", "416529"))
 
 # Create object
 assetsender = AssetSender(collection, collection_wallet, private_key)
@@ -34,14 +34,14 @@ assetsender.send_or_mint_assets(INPUT, recipient)
 assetsender.send_assets(("1099543811405", "1099543811406"), recipient)
 
 # Mint given number of same assets
-assetsender.mint_assets("rawmaterials", 318738, "recipient.wam", 5)
+assetsender.mint_assets("rawmaterials", "318738", "recipient.wam", 5)
 ```
 
 The methods return tuple or list of tuples where on the first place is the asset ID or schema-template tuple, an on the
-second place either hash of successful transaction or False if transaction failed for some reason. For example:
+second place either hash of successful transaction or 'False' if transaction failed for some reason. For example:
 
 ```
-[(('rawmaterials', 318738), False),
+[(('rawmaterials', '318738'), False),
 (['1099511811819'], '6b80b145aa261736941583ed17802a8be0254cd21a78b6bb415c923ec64ad32c')]
 ```
 
