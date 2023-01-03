@@ -237,11 +237,11 @@ class AssetSender:
         )
         return action
 
-    def _send_transaction(self, action) -> str:
+    def _send_transaction(self, action):
         """
         Sends transaction into blockchain.
         :param action: Action object.
-        :return: TX ID or raise ValueError exception if TX failed.
+        :return: Tuple with asset ID(s) and TX ID/False(if TX failed).
         """
         raw_transaction = pyntelope.Transaction(actions=[action])
         logger.debug("Linking transaction to the network...")
@@ -254,8 +254,17 @@ class AssetSender:
         signed_transaction = linked_transaction.sign(key=self.private_key)
         logger.debug("Sending transaction to the blockchain...")
         resp = signed_transaction.send()
+        asset_id = ''
         try:
-            return resp["transaction_id"]
+            asset_id = resp["processed"]["action_traces"][0]["inline_traces"][0]["act"]["data"]["asset_ids"]
+        except KeyError:
+            pass
+        try:
+            asset_id = resp["processed"]["action_traces"][0]["inline_traces"][0]["act"]["data"]["asset_id"]
+        except KeyError:
+            pass
+        try:
+            return asset_id, resp["transaction_id"]
         except KeyError:
             print(resp)
             error_message = resp["error"]["details"][0]["message"]
@@ -272,7 +281,7 @@ class AssetSender:
          e.g. [("rawmaterials", "318738"), ("magmaterials", "416529")]
         :param wallet: recipient wallet
         :param memo: transaction memo
-        :return: tuple of list with asset IDs / schema-template tuples + hash of successful transaction or False
+        :return: tuple of list with asset IDs / id-schema-template tuples + hash of successful transaction or False
         """
         if not schema_template_list:
             logger.error("Schema-template list is empty!")
@@ -331,14 +340,14 @@ class AssetSender:
         logger.info(
             f"Going to send following assets: {assets_to_send} to the wallet '{wallet}'"
         )
-        tx_return_status = self._send_transaction(
+        asset_ids, tx_return_status = self._send_transaction(
             self._prepare_transfer_transaction(
                 assets_to_send, wallet, self.collection_wallet, memo
             )
         )
         if tx_return_status:
             logger.info(f"Successfully sent: {tx_return_status}")
-            return assets_to_send, tx_return_status
+            return asset_ids, tx_return_status
         else:
             logger.critical(
                 f"Failed to send assets: {assets_to_send} to the wallet '{wallet}'!"
@@ -359,7 +368,7 @@ class AssetSender:
         :param template: self-explanatory
         :param wallet: recipient wallet
         :param quantity: how many assets of the same template needs to be minted
-        :return: list of schema-template tuples + hashes of successful transactions or False
+        :return: list of id-schema-template tuples + hashes of successful transactions or False
         """
         logger.info(
             f"Going to mint {quantity} assets with template '{template}', schema '{schema}' to the wallet '{wallet}'"
@@ -370,7 +379,7 @@ class AssetSender:
         wait_time = TIMEOUT
         while minted_quantity < quantity:
             try:
-                minting_tx = self._send_transaction(
+                asset_id, minting_tx = self._send_transaction(
                     self._prepare_mint_transaction(
                         self.collection_wallet,
                         self.collection,
@@ -396,7 +405,7 @@ class AssetSender:
                 minted_quantity += 1
                 retry = 0
                 wait_time = TIMEOUT
-                txs.append(((schema, template), minting_tx))
+                txs.append(((asset_id, schema, template), minting_tx))
                 # Sleep in order to get rid of "duplicate transaction" error
                 time.sleep(2)
             elif not minting_tx:
@@ -406,7 +415,7 @@ class AssetSender:
                 minted_quantity += 1
                 retry = 0
                 wait_time = TIMEOUT
-                txs.append(((schema, template), False))
+                txs.append(((asset_id, schema, template), False))
                 # Sleep in order to get rid of "duplicate transaction" error
                 time.sleep(2)
         return txs
