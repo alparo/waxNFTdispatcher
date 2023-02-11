@@ -3,6 +3,10 @@
 This library will help you to transfer or to mint NFTs on the WAX blockchain. It relies on the library 
 pyntelope for blockchain interaction and on the library loguru for beautiful logs.
 
+By default, the [EOSUSA](https://wax.eosusa.io) API is used to post transactions to blockchain.
+It can be changed while creating an object.
+Due to some limitations only EOSUSA API can be used to get transaction info from blockchain.
+
 
 ## Installation
 ```poetry add waxNFTdispatcher```

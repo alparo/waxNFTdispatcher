@@ -8,8 +8,8 @@ import json
 
 from pyntelope import exc
 
-ATOMICASSETS_MAIN_API = "https://wax.eosusa.io/atomicassets/v1"
-ATOMICASSETS_TEST_API = "https://test.wax.eosusa.io/atomicassets/v1"
+ATOMICASSETS_MAIN_API = "https://wax.eosusa.io"
+ATOMICASSETS_TEST_API = "https://test.wax.eosusa.io"
 TIMEOUT = 3
 RETRIES = 2
 
@@ -36,11 +36,17 @@ class AssetSender:
         self.private_key = private_key
         self.testnet = testnet
         # Set the default API endpoint
-        if self.testnet and not api_endpoint:
-            api_endpoint = ATOMICASSETS_TEST_API
-        elif not self.testnet and not api_endpoint:
+        if not self.testnet and not api_endpoint:
             api_endpoint = ATOMICASSETS_MAIN_API
-        self.endpoint_assets = f"{api_endpoint}/assets"
+        elif self.testnet and not api_endpoint:
+            api_endpoint = ATOMICASSETS_TEST_API
+        self.endpoint_assets = f"{api_endpoint}/atomicassets/v1/assets"
+        # Set the API endpoint for getting transfers
+        if not self.testnet:
+            transfer_endpoint = "https://wax.eosusa.io"
+        elif self.testnet:
+            transfer_endpoint = "https://test.wax.eosusa.io"
+        self.endpoint_transfers = f"{transfer_endpoint}/v2/history/get_transaction"
 
     def _get_available_assets(
         self,
@@ -69,6 +75,24 @@ class AssetSender:
         }
         response = requests.get(self.endpoint_assets, params=payload)
         return response.json()["data"]
+
+    def _get_right_asset_id(
+        self,
+        tx_id: str,
+    ) -> str:
+        """
+        Make request to blockchain to get asset id minted with provided tx
+        :param tx_id: id of the transaction
+        :return: asset ID found in the provided minting transaction
+        """
+        logger.info(f"Making request to blockchain to find ID of fresh minted asset.")
+        payload = {
+            "id": tx_id,
+        }
+        response = requests.get(self.endpoint_transfers, params=payload)
+        asset_id = response.json()['actions'][1]['act']['data']['asset_id']
+        logger.debug(f"Found '{asset_id}'")
+        return asset_id
 
     @staticmethod
     def _collapse_identical_schemas_templates(
@@ -253,27 +277,21 @@ class AssetSender:
         logger.debug("Sending transaction to the blockchain...")
         resp = signed_transaction.send()
         logger.debug(json.dumps(resp))
-        asset_id = ""
         try:
-            # for transfer
-            # asset_id = resp["processed"]["action_traces"][0]["inline_traces"][0]["act"]["data"]["asset_ids"]
-            asset_id = tuple(resp['processed']['action_traces'][0]['inline_traces'][2]['act']['data']['asset_ids'])
-        except (KeyError, IndexError):
-            pass
-        try:
-            # for minting
-            # asset_id = resp["processed"]["action_traces"][0]["inline_traces"][0]["act"]["data"]["asset_id"]
-            asset_id = resp["processed"]["action_traces"][0]["inline_traces"][0][
-                "inline_traces"
-            ][0]["act"]["data"]["asset_id"]
-        except (KeyError, IndexError):
-            pass
-        try:
-            return asset_id, resp["transaction_id"]
+            transaction_id = resp["transaction_id"]
         except KeyError:
-            print(resp)
             error_message = resp["error"]["details"][0]["message"]
             logger.error(error_message)
+            return 0, False
+
+        asset_id = "None"
+        if resp['processed']['action_traces'][0]['act']['name'] == "transfer":
+            asset_id = tuple(resp['processed']['action_traces'][0]['inline_traces'][2]['act']['data']['asset_ids'])
+        elif resp['processed']['action_traces'][0]['act']['name'] == "mintasset":
+            time.sleep(2)
+            asset_id = self._get_right_asset_id(transaction_id)
+
+        return asset_id, transaction_id
 
     def send_or_mint_assets(
         self,
