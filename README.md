@@ -42,7 +42,7 @@ on the second place either hash of successful transaction or 'False' if transact
 
 ```
 [(('1099511811820', 'rawmaterials', '318738'), False),
-(['1099511811819'], '6b80b145aa261736941583ed17802a8be0254cd21a78b6bb415c923ec64ad32c')]
+(('1099511811819',), '6b80b145aa261736941583ed17802a8be0254cd21a78b6bb415c923ec64ad32c')]
 ```
 
 ## Contribution

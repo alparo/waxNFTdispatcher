@@ -255,18 +255,18 @@ class AssetSender:
         logger.debug(json.dumps(resp))
         asset_id = ""
         try:
+            # for transfer
             # asset_id = resp["processed"]["action_traces"][0]["inline_traces"][0]["act"]["data"]["asset_ids"]
-            asset_id = resp["processed"]["action_traces"][0]["inline_traces"][0][
-                "inline_traces"
-            ][0]["act"]["data"]["asset_ids"]
-        except KeyError:
+            asset_id = tuple(resp['processed']['action_traces'][0]['inline_traces'][2]['act']['data']['asset_ids'])
+        except (KeyError, IndexError):
             pass
         try:
+            # for minting
             # asset_id = resp["processed"]["action_traces"][0]["inline_traces"][0]["act"]["data"]["asset_id"]
             asset_id = resp["processed"]["action_traces"][0]["inline_traces"][0][
                 "inline_traces"
             ][0]["act"]["data"]["asset_id"]
-        except KeyError:
+        except (KeyError, IndexError):
             pass
         try:
             return asset_id, resp["transaction_id"]
