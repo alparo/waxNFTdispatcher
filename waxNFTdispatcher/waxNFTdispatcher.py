@@ -91,7 +91,7 @@ class AssetSender:
         }
         response = requests.get(self.endpoint_transfers, params=payload)
         logger.debug(f"Got response: {response.json()}")
-        asset_id = response.json()['actions'][1]['act']['data']['asset_id']
+        asset_id = response.json()["actions"][1]["act"]["data"]["asset_id"]
         logger.debug(f"Found '{asset_id}'")
         return asset_id
 
@@ -286,8 +286,12 @@ class AssetSender:
             return "None", False
 
         asset_id = "None"
-        if resp['processed']['action_traces'][0]['act']['name'] == "transfer":
-            asset_id = tuple(resp['processed']['action_traces'][0]['inline_traces'][2]['act']['data']['asset_ids'])
+        if resp["processed"]["action_traces"][0]["act"]["name"] == "transfer":
+            asset_id = tuple(
+                resp["processed"]["action_traces"][0]["inline_traces"][2]["act"][
+                    "data"
+                ]["asset_ids"]
+            )
         # elif resp['processed']['action_traces'][0]['act']['name'] == "mintasset":
         #     retry = 1
         #     while retry <= RETRIES + 1:
