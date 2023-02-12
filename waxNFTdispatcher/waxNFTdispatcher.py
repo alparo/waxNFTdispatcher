@@ -289,21 +289,18 @@ class AssetSender:
         if resp['processed']['action_traces'][0]['act']['name'] == "transfer":
             asset_id = tuple(resp['processed']['action_traces'][0]['inline_traces'][2]['act']['data']['asset_ids'])
         elif resp['processed']['action_traces'][0]['act']['name'] == "mintasset":
-            time.sleep(TIMEOUT)
             retry = 0
-            while retry < RETRIES:
+            while retry <= RETRIES:
+                time.sleep(TIMEOUT)
                 try:
                     asset_id = self._get_right_asset_id(transaction_id)
                 except KeyError:
                     logger.error(
-                        f"Didn't find the transaction on blockchain. Will try again..."
+                        f"Didn't find the transaction on blockchain. Will try again in {TIMEOUT} seconds..."
                     )
-                    time.sleep(TIMEOUT)
                     retry += 1
                 else:
                     break
-
-
 
         return asset_id, transaction_id
 
