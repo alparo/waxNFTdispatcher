@@ -90,6 +90,7 @@ class AssetSender:
             "id": tx_id,
         }
         response = requests.get(self.endpoint_transfers, params=payload)
+        logger.debug(f"Got response: {response.json()}")
         asset_id = response.json()['actions'][1]['act']['data']['asset_id']
         logger.debug(f"Found '{asset_id}'")
         return asset_id
@@ -288,8 +289,21 @@ class AssetSender:
         if resp['processed']['action_traces'][0]['act']['name'] == "transfer":
             asset_id = tuple(resp['processed']['action_traces'][0]['inline_traces'][2]['act']['data']['asset_ids'])
         elif resp['processed']['action_traces'][0]['act']['name'] == "mintasset":
-            time.sleep(2)
-            asset_id = self._get_right_asset_id(transaction_id)
+            time.sleep(TIMEOUT)
+            retry = 0
+            while retry < RETRIES:
+                try:
+                    asset_id = self._get_right_asset_id(transaction_id)
+                except KeyError:
+                    logger.error(
+                        f"Didn't found the transaction on blockchain. Will try again..."
+                    )
+                    time.sleep(TIMEOUT)
+                    retry += 1
+                else:
+                    break
+
+
 
         return asset_id, transaction_id
 
