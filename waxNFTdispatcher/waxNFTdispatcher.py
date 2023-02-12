@@ -283,24 +283,25 @@ class AssetSender:
         except KeyError:
             error_message = resp["error"]["details"][0]["message"]
             logger.error(error_message)
-            return 0, False
+            return "None", False
 
         asset_id = "None"
         if resp['processed']['action_traces'][0]['act']['name'] == "transfer":
             asset_id = tuple(resp['processed']['action_traces'][0]['inline_traces'][2]['act']['data']['asset_ids'])
-        elif resp['processed']['action_traces'][0]['act']['name'] == "mintasset":
-            retry = 0
-            while retry <= RETRIES:
-                time.sleep(TIMEOUT)
-                try:
-                    asset_id = self._get_right_asset_id(transaction_id)
-                except KeyError:
-                    logger.error(
-                        f"Didn't find the transaction on blockchain. Will try again in {TIMEOUT} seconds..."
-                    )
-                    retry += 1
-                else:
-                    break
+        # elif resp['processed']['action_traces'][0]['act']['name'] == "mintasset":
+        #     retry = 1
+        #     while retry <= RETRIES + 1:
+        #         time.sleep(TIMEOUT)
+        #         try:
+        #             asset_id = self._get_right_asset_id(transaction_id)
+        #         except KeyError:
+        #             logger.error(
+        #                 f"Try nr.{retry}: didn't find the transaction on blockchain. "
+        #                 f"Will try again in {TIMEOUT} seconds..."
+        #             )
+        #             retry += 1
+        #         else:
+        #             break
 
         return asset_id, transaction_id
 

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "waxNFTdispatcher"
-version = "0.2.9"
+version = "0.2.92"
 description = "This library will help you to transfer or to mint NFTs on the WAX blockchain"
 authors = ["Amparo Dios <amparo.dios@gmail.com>"]
 readme = "README.md"
