@@ -296,7 +296,7 @@ class AssetSender:
                     asset_id = self._get_right_asset_id(transaction_id)
                 except KeyError:
                     logger.error(
-                        f"Didn't found the transaction on blockchain. Will try again..."
+                        f"Didn't find the transaction on blockchain. Will try again..."
                     )
                     time.sleep(TIMEOUT)
                     retry += 1
