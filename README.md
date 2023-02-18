@@ -39,6 +39,9 @@ assetsender.send_assets(("1099543811405", "1099543811406"), recipient)
 
 # Mint given number of same assets
 assetsender.mint_assets("rawmaterials", "318738", "recipient.wam", 5)
+
+# Mint given number of same assets and then try to fetch their IDs
+assetsender.mint_assets_and_get_ids("rawmaterials", "318738", "recipient.wam", 5)
 ```
 
 The methods return tuple or list of tuples where on the first place is the asset ID or id-schema-template tuple, and 

@@ -85,7 +85,7 @@ class AssetSender:
         :param tx_id: id of the transaction
         :return: asset ID found in the provided minting transaction
         """
-        logger.info(f"Making request to blockchain to find ID of fresh minted asset.")
+        logger.info(f"Making request to blockchain to find ID of freshly minted asset.")
         payload = {
             "id": tx_id,
         }
@@ -292,20 +292,6 @@ class AssetSender:
                     "data"
                 ]["asset_ids"]
             )
-        # elif resp['processed']['action_traces'][0]['act']['name'] == "mintasset":
-        #     retry = 1
-        #     while retry <= RETRIES + 1:
-        #         time.sleep(TIMEOUT)
-        #         try:
-        #             asset_id = self._get_right_asset_id(transaction_id)
-        #         except KeyError:
-        #             logger.error(
-        #                 f"Try nr.{retry}: didn't find the transaction on blockchain. "
-        #                 f"Will try again in {TIMEOUT} seconds..."
-        #             )
-        #             retry += 1
-        #         else:
-        #             break
 
         return asset_id, transaction_id
 
@@ -402,7 +388,7 @@ class AssetSender:
     ) -> list:
         """
         Mints given number of assets with given schema and template. If gets 'duplicate transaction' error will wait
-        fot TIMEOUT seconds and do RETRIES attempts of retries.
+        fot TIMEOUT seconds and do RETRIES attempts of retries. Always return 'None' instead of asset ID.
         :param schema: self-explanatory
         :param template: self-explanatory
         :param wallet: recipient wallet
@@ -460,3 +446,48 @@ class AssetSender:
                 # Sleep in order to get rid of "duplicate transaction" error
                 time.sleep(2)
         return txs
+
+    def mint_assets_and_get_ids(
+        self,
+        schema: str,
+        template: str,
+        wallet: str,
+        quantity: int = 1,
+    ) -> list:
+        """
+        Same as mint_asset() but makes separate request to blockchain to fetch the real ID of minted asset.
+        :param schema: self-explanatory
+        :param template: self-explanatory
+        :param wallet: recipient wallet
+        :param quantity: how many assets of the same template needs to be minted
+        :return: list of id-schema-template tuples + hashes of successful transactions or False
+        """
+        output_list = self.mint_assets(schema, template, wallet, quantity)
+        new_output_list = []
+        logger.info("Minting finished. Now gonna try to fetch IDs.")
+        for asset in output_list:
+            transaction_id = asset[1]
+            retry = 0
+            max_retries = RETRIES + 2
+            wait_time = TIMEOUT
+            asset_id = False
+            while retry <= max_retries:
+                time.sleep(wait_time)
+                try:
+                    asset_id = self._get_right_asset_id(transaction_id)
+                except KeyError:
+                    retry += 1
+                    wait_time += 2
+                    logger.error(
+                        f"Try nr.{retry}: didn't find the transaction on blockchain. "
+                        f"Will try again in {wait_time} seconds..."
+                    )
+                else:
+                    break
+            if asset_id:
+                new_output_list.append(
+                    ((asset_id, asset[0][1], asset[0][2]), transaction_id)
+                )
+            else:
+                raise ValueError("Couldn't fetch ID! Blockchain is too slow!")
+        return new_output_list
