@@ -90,7 +90,7 @@ class AssetSender:
             "id": tx_id,
         }
         response = requests.get(self.endpoint_transfers, params=payload)
-        logger.debug(f"Got response: {response.json()}")
+        #logger.debug(f"Got response: {response.json()}")
         asset_id = response.json()["actions"][1]["act"]["data"]["asset_id"]
         logger.debug(f"Found '{asset_id}'")
         return asset_id
@@ -277,7 +277,7 @@ class AssetSender:
         signed_transaction = linked_transaction.sign(key=self.private_key)
         logger.debug("Sending transaction to the blockchain...")
         resp = signed_transaction.send()
-        logger.debug(json.dumps(resp))
+        #logger.debug(json.dumps(resp))
         try:
             transaction_id = resp["transaction_id"]
         except KeyError:
