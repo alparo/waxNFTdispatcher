@@ -52,12 +52,14 @@ class AssetSender:
         self,
         schema_template_list: Iterable[Tuple[str, str]],
         sorting_key: str = "asset_id",
+        limit: int = 1000,
     ) -> list:
         """
         Make request to blockchain to get available assets in collection wallet with given template IDs
         :param schema_template_list: list or tuple of (schema, template) tuples.
                 E.g. [("rawmaterials", "318738"), ("magmaterials", "416529")]
         :param sorting_key: self-explanatory, default "asset_id"
+        :param limit: self-explanatory, default "1000"
         :return: list with all found assets (with other info from API) sorted by default by the highest asset ID
         """
         # Build comma separated string of templates
@@ -72,6 +74,7 @@ class AssetSender:
             "owner": self.collection_wallet,
             "template_whitelist": template_list_string,
             "sort": sorting_key,
+            "limit": limit,
         }
         response = requests.get(self.endpoint_assets, params=payload)
         return response.json()["data"]
@@ -90,7 +93,7 @@ class AssetSender:
             "id": tx_id,
         }
         response = requests.get(self.endpoint_transfers, params=payload)
-        #logger.debug(f"Got response: {response.json()}")
+        # logger.debug(f"Got response: {response.json()}")
         asset_id = response.json()["actions"][1]["act"]["data"]["asset_id"]
         logger.debug(f"Found '{asset_id}'")
         return asset_id
@@ -277,7 +280,7 @@ class AssetSender:
         signed_transaction = linked_transaction.sign(key=self.private_key)
         logger.debug("Sending transaction to the blockchain...")
         resp = signed_transaction.send()
-        #logger.debug(json.dumps(resp))
+        # logger.debug(json.dumps(resp))
         try:
             transaction_id = resp["transaction_id"]
         except KeyError:
