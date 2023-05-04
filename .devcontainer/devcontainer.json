@@ -7,7 +7,8 @@
 	"features": {
 		"ghcr.io/devcontainers-contrib/features/poetry:2": {},
 		"ghcr.io/devcontainers-contrib/features/black:2": {}
-	}
+	},
+	"runArgs": ["--env-file",".devcontainer/devcontainer.env"]
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
