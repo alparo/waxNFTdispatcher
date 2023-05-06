@@ -10,6 +10,10 @@
 	},
 	"runArgs": ["--env-file",".devcontainer/devcontainer.env"]
 
+	// After creating container execute:
+	// poetry config virtualenvs.in-project true --local
+	// poetry update
+
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 
