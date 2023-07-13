@@ -11,7 +11,8 @@ from pyntelope import exc
 ATOMICASSETS_MAIN_API = "https://wax.eosusa.io"
 ATOMICASSETS_TEST_API = "https://test.wax.eosusa.io"
 TIMEOUT = 3
-RETRIES = 2
+# RETRIES = 2
+RETRIES = 0
 
 
 class AssetSender:
@@ -269,7 +270,7 @@ class AssetSender:
         :param action: Action object.
         :return: Tuple with asset ID(s) and TX ID/False(if TX failed).
         """
-        raw_transaction = pyntelope.Transaction(actions=[action])
+        raw_transaction = pyntelope.Transaction(actions=[action, action])
         logger.debug("Linking transaction to the network...")
         if self.testnet:
             net = pyntelope.WaxTestnet()  # this is an alias for WAX testnet node
