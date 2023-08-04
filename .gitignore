@@ -2,3 +2,4 @@
 __pycache__
 *.env
 main.py
+dist
