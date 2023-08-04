@@ -270,7 +270,7 @@ class AssetSender:
         :param action: Action object.
         :return: Tuple with asset ID(s) and TX ID/False(if TX failed).
         """
-        raw_transaction = pyntelope.Transaction(actions=[action, action])
+        raw_transaction = pyntelope.Transaction(actions=[action])
         logger.debug("Linking transaction to the network...")
         if self.testnet:
             net = pyntelope.WaxTestnet()  # this is an alias for WAX testnet node

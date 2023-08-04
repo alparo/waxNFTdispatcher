@@ -1,6 +1,6 @@
 # waxNFTdispatcher
 
-This library will help you to transfer or to mint NFTs on the WAX blockchain. It relies on the library 
+This library will help you to transfer or to mint NFTs on the WAX blockchain. It relies on the library
 pyntelope for blockchain interaction and on the library loguru for beautiful logs.
 
 By default, the [EOSUSA](https://eosusa.io/) WAX API is used to post transactions to blockchain.
@@ -44,7 +44,7 @@ assetsender.mint_assets("rawmaterials", "318738", "recipient.wam", 5)
 assetsender.mint_assets_and_get_ids("rawmaterials", "318738", "recipient.wam", 5)
 ```
 
-The methods return tuple or list of tuples where on the first place is the asset ID or id-schema-template tuple, and 
+The methods return tuple or list of tuples where on the first place is the asset ID or id-schema-template tuple, and
 on the second place either hash of successful transaction or 'False' if transaction failed for some reason. For example:
 
 ```
@@ -53,5 +53,8 @@ on the second place either hash of successful transaction or 'False' if transact
 ```
 
 ## Contribution
-Contribution is highly welcome. Please send your pull requests or create issues with found bugs and suggestions. 
+Contribution is highly welcome. Please send your pull requests or create issues with found bugs and suggestions.
 In your pull requests please use Black formatting.
+
+## Donation
+If you feel like you can send any amount of WAX to the WAX address 24.gm
