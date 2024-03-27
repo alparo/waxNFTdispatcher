@@ -290,13 +290,18 @@ class AssetSender:
             return "None", False
 
         asset_id = "None"
-        if resp["processed"]["action_traces"][0]["act"]["name"] == "transfer":
-            asset_id = tuple(
-                resp["processed"]["action_traces"][0]["inline_traces"][2]["act"][
-                    "data"
-                ]["asset_ids"]
-            )
-
+        try:
+            if resp["processed"]["action_traces"][0]["act"]["name"] == "transfer":
+                asset_id = tuple(
+                    resp["processed"]["action_traces"][0]["inline_traces"][2]["act"][
+                        "data"
+                    ]["asset_ids"]
+                )
+        except KeyError:
+            error_message = resp["error"]["details"][0]["message"]
+            logger.error(error_message)
+            return "None", False
+            
         return asset_id, transaction_id
 
     def send_or_mint_assets(
