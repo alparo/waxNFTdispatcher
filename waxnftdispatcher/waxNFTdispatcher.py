@@ -463,7 +463,7 @@ class AssetSender:
                 minted_quantity += 1
                 retry = 0
                 wait_time = TIMEOUT
-                txs.append(((asset_id, schema, template), False))
+                txs.append(((None, schema, template), False))
                 # Sleep in order to get rid of "duplicate transaction" error
                 time.sleep(2)
         return txs
