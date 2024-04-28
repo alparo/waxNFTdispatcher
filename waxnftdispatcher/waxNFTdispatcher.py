@@ -434,6 +434,18 @@ class AssetSender:
                     continue
                 logger.error(f"Reached {retry} retries. Giving up...")
                 minting_tx = False
+            except UnboundLocalError:
+                logger.error(
+                    f"Couldn't mint '{schema}, {template}'. Will retry in {wait_time} seconds..."
+                )
+                time.sleep(wait_time)
+                wait_time *= 2
+                retry += 1
+                if retry <= RETRIES:
+                    continue
+                logger.error(f"Reached {retry} retries. Giving up...")
+                minting_tx = False
+                
             if minting_tx and minting_tx not in txs:
                 logger.info(
                     f"Successfully minted ({asset_id}, {schema}, {template}): {minting_tx}"
